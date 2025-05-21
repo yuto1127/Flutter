@@ -1,0 +1,4721 @@
+﻿■■マルチプラットフォーム対応 最新フレームワーク Flutter 3入門
+■掲載サンプルコードリスト
+---------------------------------------------------------------------
+
+
+▼リスト1-1
+PATH=$PATH:……Flutter SDKのパス……/bin
+export PATH
+
+
+---------------------------------------------------------------------
+
+
+▼リスト2-1
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(MyApp());
+}
+
+class MyApp extends StatelessWidget {
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Flutter Demo',
+      home: Text(
+        'Hello, Flutter World!!',
+        style: TextStyle(fontSize:32.0),
+      ),
+    );
+  }
+}
+
+
+---------------------------------------------------------------------
+
+
+▼リスト2-2
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(MyApp());
+}
+
+class MyApp extends StatelessWidget {
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Flutter Demo',
+      home: Scaffold(
+        appBar: AppBar(
+          title: Text('Hello Flutter!'),
+        ),
+        body: Text(
+          'Hello Flutter World!!',
+          style: TextStyle(fontSize:32.0),
+        ),
+      ),
+    );
+  }
+}
+
+
+---------------------------------------------------------------------
+
+
+▼リスト2-3
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(const MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
+  final title = 'Flutterサンプル';
+  final message = 'サンプル・メッセージ。';
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Flutter Demo',
+      home: MyHomePage(
+        title: this.title,
+        message: this.message
+      ),
+    );
+  }
+}
+
+class MyHomePage extends StatefulWidget {
+  final String title;
+  final String message;
+  const MyHomePage({
+    Key? key,
+    required this.title,
+    required this.message
+  }): super(key: key);
+
+  @override
+  _MyHomePageState createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(widget.title),
+      ),
+      body: Text(
+        widget.message,
+        style: TextStyle(fontSize:32.0),
+      ),
+    );
+  }
+}
+
+
+---------------------------------------------------------------------
+
+
+▼リスト2-4
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(const MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
+  final title = 'Flutterサンプル';
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Flutter Demo',
+      home: MyHomePage(
+        title:this.title,
+      ),
+    );
+  }
+}
+
+class MyHomePage extends StatefulWidget {
+  const MyHomePage({required this.title}): super();
+  final String title;
+
+  @override
+  _MyHomePageState createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+  String _message = 'Hello!';
+
+  void _setMessage() {
+    setState(() {
+      _message = 'タップしました！';
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(widget.title),
+      ),
+      body: Text(
+        _message,
+        style: TextStyle(fontSize:32.0),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: _setMessage,
+        tooltip: 'set message.',
+        child: Icon(Icons.star),
+      ),
+    );
+  }
+}
+
+
+---------------------------------------------------------------------
+
+
+▼リスト2-5
+class MyHomePage extends StatefulWidget {
+  const MyHomePage({title:'Flutter Demo'}): super();
+
+  @override
+  _MyHomePageState createState() => _MyHomePageState();
+}
+
+// データ用クラス
+class Data {
+  int _price;
+  String _name;
+  Data(this._name, this._price): super();
+
+  @override
+  String toString() {
+    return _name + ':' + _price.toString() + '円';
+  }
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+  // サンプルデータ
+  static final _data = [
+    Data('Apple',200),
+    Data('Orange', 150),
+    Data('Peach', 300)
+  ];
+  Data _item = _data[0];
+
+  void _setData() {
+    setState(() {
+      _item = (_data..shuffle()).first;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Set data'),
+      ),
+      body: Text(
+        _item.toString(),
+        style: TextStyle(fontSize:32.0),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: _setData,
+        tooltip: 'set message.',
+        child: Icon(Icons.star),
+      ),
+    );
+  }
+}
+
+
+---------------------------------------------------------------------
+
+
+▼リスト2-6
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(const MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Flutter Demo',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+    );
+  }
+}
+
+class MyHomePage extends StatefulWidget {
+  const MyHomePage({Key? key, required this.title}) : super(key: key);
+  final String title;
+
+  @override
+  State<MyHomePage> createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+  int _counter = 0;
+
+  void _incrementCounter() {
+    setState(() {
+      _counter++;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(widget.title),
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            const Text(
+              'You have pushed the button this many times:',
+            ),
+            Text(
+              '$_counter',
+              style: Theme.of(context).textTheme.headline4,
+            ),
+          ],
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: _incrementCounter,
+        tooltip: 'Increment',
+        child: const Icon(Icons.add),
+      ),
+    );
+  }
+}
+
+
+---------------------------------------------------------------------
+
+
+▼リスト2-7
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(MyApp());
+}
+class MyApp extends StatelessWidget {
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Generated App',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+        primaryColor: const Color(0xff2196f3),
+        canvasColor: const Color(0xffafafa),
+      ),
+      home: MyHomePage(),
+    );
+  }
+}
+
+class MyHomePage extends StatefulWidget {
+  MyHomePage({Key? key}) : super(key: key);
+  @override
+  _MyHomePageState createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+    @override
+    Widget build(BuildContext context) {
+      return Scaffold(
+        appBar: AppBar(
+          title: Text('App Name'),
+          ),
+        body:
+          Text(
+          "Hello Flutter!",
+            style: TextStyle(fontSize:32.0,
+            color: const Color(0xff000000),
+            fontWeight: FontWeight.w700,
+            fontFamily: "Roboto"),
+          ),
+      );
+    }
+}
+
+
+---------------------------------------------------------------------
+
+
+▼リスト2-8
+class MyApp extends StatelessWidget {
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Generated App',
+      theme: ThemeData(
+        primarySwatch: Colors.pink,
+        primaryColor: const Color(0xffe91e63),
+        canvasColor: const Color(0xfffafafa),
+      ),
+      home: MyHomePage(),
+    );
+  }
+}
+
+
+---------------------------------------------------------------------
+
+
+▼リスト2-9
+class _MyHomePageState extends State<MyHomePage> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('App Name'),
+      ),
+      body:
+      Center(
+        child:
+        Text(
+          "Hello Flutter!",
+          style: TextStyle(fontSize:32.0,
+              color: const Color(0xff000000),
+              fontWeight: FontWeight.w700,
+              fontFamily: "Roboto"),
+        ),
+      ),
+    );
+  }
+}
+
+
+---------------------------------------------------------------------
+
+
+▼リスト2-10
+class _MyHomePageState extends State<MyHomePage> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('App Name'),
+      ),
+      body:
+      Container(
+        child:
+        Text(
+          "Hello Flutter!",
+          style: TextStyle(fontSize:32.0,
+              color: const Color(0xff000000),
+              fontWeight: FontWeight.w700,
+              fontFamily: "Roboto"),
+        ),
+        padding: const EdgeInsets.all(10.0),
+        alignment: Alignment.bottomCenter,
+      ),
+    );
+  }
+}
+
+
+---------------------------------------------------------------------
+
+
+▼リスト2-11
+alignment: const Alignment(0.5, -0.5),
+
+
+---------------------------------------------------------------------
+
+
+▼リスト2-12
+class _MyHomePageState extends State<MyHomePage> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('App Name'),
+      ),
+      body:
+      Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisSize: MainAxisSize.max,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            Text(
+              "One",
+              style: TextStyle(fontSize:32.0,
+                  color: const Color(0xff000000),
+                  fontWeight: FontWeight.w700,
+                  fontFamily: "Roboto"),
+            ),
+            Text(
+              "Two",
+              style: TextStyle(fontSize:32.0,
+                  color: const Color(0xff000000),
+                  fontWeight: FontWeight.w700,
+                  fontFamily: "Roboto"),
+            ),
+            Text(
+              "Three",
+              style: TextStyle(fontSize:32.0,
+                  color: const Color(0xff000000),
+                  fontWeight: FontWeight.w700,
+                  fontFamily: "Roboto"),
+            )
+          ]
+      ),
+    );
+  }
+}
+
+
+---------------------------------------------------------------------
+
+
+▼リスト2-13
+class _MyHomePageState extends State<MyHomePage> {
+    @override
+    Widget build(BuildContext context) {
+      return Scaffold(
+        appBar: AppBar(
+          title: Text('App Name'),
+        ),
+        body:
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.max,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              Text(
+              "One",
+                style: TextStyle(fontSize:32.0,
+                color: const Color(0xff000000),
+                fontWeight: FontWeight.w400,
+                fontFamily: "Roboto"),
+              ),
+              Text(
+              "Two",
+                style: TextStyle(fontSize:32.0,
+                color: const Color(0xff000000),
+                fontWeight: FontWeight.w400,
+                fontFamily: "Roboto"),
+              ),
+              Text(
+              "Three",
+                style: TextStyle(fontSize:32.0,
+                color: const Color(0xff000000),
+                fontWeight: FontWeight.w400,
+                fontFamily: "Roboto"),
+              )
+            ]
+          ),
+      );
+    }
+    void fabPressed() {}
+
+}
+
+
+---------------------------------------------------------------------
+
+
+▼リスト3-1
+class _MyHomePageState extends State<MyHomePage> {
+  static var _message = 'ok.';
+  static var _janken = <String>['グー', 'チョキ', 'パー'];
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('App Name'),
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisSize: MainAxisSize.max,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: <Widget>[
+            Padding(
+              padding: EdgeInsets.all(20.0),
+              child: Text(
+                _message,
+                style: TextStyle(
+                  fontSize: 32.0,
+                  fontWeight: FontWeight.w400,
+                  fontFamily: "Roboto"),
+              ),
+            ),
+            TextButton(
+              onPressed: buttonPressed,
+              child: Padding(
+                padding: EdgeInsets.all(10.0),
+                child: Text(
+                  "Push me!",
+                  style: TextStyle(
+                    fontSize: 32.0,
+                    color: const Color(0xff000000),
+                    fontWeight: FontWeight.w400,
+                    fontFamily: "Roboto"),
+                )
+              )
+            )
+          ]
+        ),
+      ),
+    );
+  }
+
+  void buttonPressed() {
+    setState(() {
+      _message = (_janken..shuffle()).first;
+    });
+  }
+}
+
+
+---------------------------------------------------------------------
+
+
+▼リスト3-2
+TextButton(
+  onPressed:buttonPressed,
+  child: Padding(
+    padding: EdgeInsets.all(10.0),
+    child:Icon (
+      Icons.android,
+      size: 50.0,
+    )
+  )
+)
+
+
+---------------------------------------------------------------------
+
+
+▼リスト3-3
+void buttonPressed(){
+  setState((){
+    _message = (_janken..shuffle()).first;
+  });
+}
+
+
+---------------------------------------------------------------------
+
+
+▼リスト3-4
+ElevatedButton(
+  onPressed:buttonPressed,
+  child: Padding(
+    padding: EdgeInsets.all(10.0),
+    child:Icon (
+      Icons.android,
+      size: 50.0,
+    )
+  )
+)
+
+
+---------------------------------------------------------------------
+
+
+▼リスト3-5
+IconButton(
+  icon: const Icon(Icons.insert_emoticon),
+  iconSize: 100.0,
+  color: Colors.red,
+  onPressed:buttonPressed,
+)
+
+
+---------------------------------------------------------------------
+
+
+▼リスト3-6
+FloatingActionButton(
+  child: Icon(Icons.android),
+  onPressed: buttonPressed
+),
+
+
+---------------------------------------------------------------------
+
+
+▼リスト3-7
+RawMaterialButton(
+  fillColor: Colors.white,
+  elevation: 10.0,
+  padding: EdgeInsets.all(10.0),
+  child: Text(
+      "Push me!",
+      style: TextStyle(fontSize:32.0,
+      color: const Color(0xff000000),
+      fontWeight: FontWeight.w400,
+      fontFamily: "Roboto"),
+    ),
+  onPressed: buttonPressed
+),
+
+
+---------------------------------------------------------------------
+
+
+▼リスト3-8
+class _MyHomePageState extends State<MyHomePage> {
+  static var _message = 'ok.';
+  static final _controller = TextEditingController();
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('App Name'),
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisSize: MainAxisSize.max,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: <Widget>[
+            Padding(
+              padding: EdgeInsets.all(20.0),
+              child: Text(
+                _message,
+                style: TextStyle(
+                  fontSize: 32.0,
+                  fontWeight: FontWeight.w400,
+                  fontFamily: "Roboto"),
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.all(10.0),
+              child: TextField(
+                controller: _controller,
+                style: TextStyle(
+                  fontSize: 28.0,
+                  color: const Color(0xffFF0000),
+                  fontWeight: FontWeight.w400,
+                  fontFamily: "Roboto"),
+              ),
+            ),
+            ElevatedButton(
+                child: Text(
+                  "Push me!",
+                  style: TextStyle(
+                    fontSize: 32.0,
+                    color: const Color(0xff000000),
+                    fontWeight: FontWeight.w400,
+                    fontFamily: "Roboto"),
+                ),
+                onPressed: buttonPressed),
+          ],
+        ),
+      ),
+    );
+  }
+
+  void buttonPressed() {
+    setState(() {
+      _message = 'you said: ' + _controller.text;
+    });
+  }
+}
+
+
+---------------------------------------------------------------------
+
+
+▼リスト3-9
+class _MyHomePageState extends State<MyHomePage> {
+  static var _message = 'ok.';
+  static final _controller = TextEditingController();
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('App Name'),
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisSize: MainAxisSize.max,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: <Widget>[
+            Padding(
+              padding: EdgeInsets.all(20.0),
+              child: Text(
+                _message,
+                style: TextStyle(
+                  fontSize: 32.0,
+                  fontWeight: FontWeight.w400,
+                  fontFamily: "Roboto"),
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.all(10.0),
+              child: TextField(
+                onChanged: textChanged,
+                controller: _controller,
+                style: TextStyle(
+                  fontSize: 28.0,
+                  color: const Color(0xffFF0000),
+                  fontWeight: FontWeight.w400,
+                  fontFamily: "Roboto"),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  void textChanged(String val){
+    setState((){
+      _message = val.toUpperCase();
+    });
+  }
+}
+
+
+---------------------------------------------------------------------
+
+
+▼リスト3-10
+class _MyHomePageState extends State<MyHomePage> {
+  static var _message = 'ok.';
+  static var _checked = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('App Name'),
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisSize: MainAxisSize.max,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: <Widget>[
+            Padding(
+              padding: EdgeInsets.all(20.0),
+              child: Text(
+                _message,
+                style: TextStyle(
+                  fontSize: 32.0,
+                  fontWeight: FontWeight.w400,
+                  fontFamily: "Roboto"),
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.all(10.0),
+              child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.max,
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: <Widget>[
+                    Checkbox(
+                      value:_checked,
+                      onChanged: checkChanged,
+                    ),
+                    Text(
+                      "Checkbox",
+                      style: TextStyle(fontSize:28.0,
+                          fontWeight: FontWeight.w400,
+                          fontFamily: "Roboto"),
+                    )
+                  ]
+              )
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  void checkChanged(bool? value){
+    setState(() {
+      _checked = value!;
+      _message = value ? 'checked!' : 'not checked...';
+    });
+  }
+
+}
+
+
+---------------------------------------------------------------------
+
+
+▼リスト3-11
+Switch(
+  value:_checked,
+  onChanged: checkChanged,
+),
+
+
+---------------------------------------------------------------------
+
+
+▼リスト3-12
+class _MyHomePageState extends State<MyHomePage> {
+  static var _message = 'ok.';
+  static var _selected = 'A';
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('App Name'),
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisSize: MainAxisSize.max,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: <Widget>[
+            Padding(
+              padding: EdgeInsets.all(20.0),
+              child: Text(
+                _message,
+                style: TextStyle(
+                  fontSize: 32.0,
+                  fontWeight: FontWeight.w400,
+                  fontFamily: "Roboto"),
+              ),
+            ),
+
+            Padding(
+              padding: EdgeInsets.all(10.0),
+            ),
+
+            Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                mainAxisSize: MainAxisSize.max,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+
+                  Radio<String>(
+                    value: 'A',
+                    groupValue: _selected,
+                    onChanged: checkChanged,
+                  ),
+                  Text(
+                    "radio A",
+                    style: TextStyle(fontSize:28.0,
+                      fontWeight: FontWeight.w400,
+                      fontFamily: "Roboto"),
+                  )
+                ]
+            ),
+
+            Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                mainAxisSize: MainAxisSize.max,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+
+                  Radio<String>(
+                    value: 'B',
+                    groupValue: _selected,
+                    onChanged: checkChanged,
+                  ),
+                  Text(
+                    "radio B",
+                    style: TextStyle(fontSize:28.0,
+                      fontWeight: FontWeight.w400,
+                      fontFamily: "Roboto"),
+                  )
+                ]
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  void checkChanged(String? value){
+    setState(() {
+      _selected = value ?? 'nodata';
+      _message = 'select: $_selected';
+    });
+  }
+}
+
+
+---------------------------------------------------------------------
+
+
+▼リスト3-13
+class _MyHomePageState extends State<MyHomePage> {
+  static var _message = 'ok.';
+  static var _selected = 'One';
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('App Name'),
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisSize: MainAxisSize.max,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: <Widget>[
+            Padding(
+              padding: EdgeInsets.all(20.0),
+              child: Text(
+                _message,
+                style: TextStyle(
+                  fontSize: 32.0,
+                  fontWeight: FontWeight.w400,
+                  fontFamily: "Roboto"),
+              ),
+            ),
+
+            Padding(
+              padding: EdgeInsets.all(10.0),
+            ),
+
+            DropdownButton<String>(
+              onChanged: popupSelected,
+              value: _selected,
+              style: TextStyle(color:Colors.black,
+                fontSize:28.0,
+                fontWeight: FontWeight.w400,
+                fontFamily: 'Roboto'),
+
+              items: <DropdownMenuItem<String>>[
+                const DropdownMenuItem<String>(value: 'One',
+                  child: const Text('One')),
+                const DropdownMenuItem<String>(value: 'Two',
+                  child: const Text('Two')),
+                const DropdownMenuItem<String>(value: 'Three',
+                  child: const Text('Three')),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  void popupSelected(String? value){
+    setState(() {
+      _selected = value ?? 'not selected...';
+      _message = 'select: $_selected';
+    });
+  }
+}
+
+
+---------------------------------------------------------------------
+
+
+▼リスト3-14
+Align(alignment: Alignment.centerRight,
+  child: PopupMenuButton(
+    onSelected: (String value)=> popupSelected(value),
+    itemBuilder: (BuildContext context) =>
+    <PopupMenuEntry<String>>[
+      const PopupMenuItem( child: const Text("One"), value: "One",),
+      const PopupMenuItem( child: const Text("Two"), value: "Two",),
+      const PopupMenuItem( child: const Text("Three"), value: "Three",),
+    ],
+  ),
+),
+
+
+---------------------------------------------------------------------
+
+
+▼リスト3-15
+class _MyHomePageState extends State<MyHomePage> {
+  static var _message = 'ok.';
+  static var _value = 0.0;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('App Name'),
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisSize: MainAxisSize.max,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: <Widget>[
+            Padding(
+              padding: EdgeInsets.all(20.0),
+              child: Text(
+                _message,
+                style: TextStyle(
+                  fontSize: 32.0,
+                  fontWeight: FontWeight.w400,
+                  fontFamily: "Roboto"),
+              ),
+            ),
+
+            Padding(
+              padding: EdgeInsets.all(10.0),
+            ),
+
+            Slider(
+              onChanged: sliderChanged,
+              min: 0.0,
+              max: 100.0,
+              divisions: 20,
+              value:_value,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  void sliderChanged(double value){
+    setState(() {
+      _value = value.floorToDouble();
+      _message = 'set value: $_value';
+    });
+  }
+}
+
+
+---------------------------------------------------------------------
+
+
+▼リスト3-16
+class _MyHomePageState extends State<MyHomePage> {
+  static var _message = 'ok.';
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('App Name'),
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisSize: MainAxisSize.max,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: <Widget>[
+            Padding(
+              padding: EdgeInsets.all(20.0),
+              child: Text(
+                _message,
+                style: TextStyle(
+                  fontSize: 32.0,
+                  fontWeight: FontWeight.w400,
+                  fontFamily: "Roboto"),
+              ),
+            ),
+
+            Padding(
+              padding: EdgeInsets.all(10.0),
+            ),
+
+            Padding(
+              padding: EdgeInsets.all(10.0),
+              child: ElevatedButton(
+                onPressed:buttonPressed,
+              child: Text(
+                  "tap me!",
+                  style: TextStyle(fontSize:32.0,
+                    color: const Color(0xff000000),
+                    fontWeight: FontWeight.w400,
+                    fontFamily: "Roboto"),
+                )
+              )
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  void buttonPressed(){
+    showDialog(
+        context: context,
+        builder: (BuildContext context) => AlertDialog(
+          title: Text("Hello!"),
+          content: Text("This is sample."),
+        )
+    );
+  }
+}
+
+
+---------------------------------------------------------------------
+
+
+▼リスト3-17
+void buttonPressed(){
+  showDialog(
+    context: context,
+    builder: (BuildContext context) => AlertDialog(
+      title: Text("Hello!"),
+      content: const Text("This is sample."),
+      actions: <Widget>[
+        TextButton(
+            child: const Text('Cancel'),
+            onPressed: () => Navigator.pop<String>(context, 'Cancel')
+        ),
+        TextButton(
+            child: const Text('OK'),
+            onPressed: () => Navigator.pop<String>(context, 'OK')
+        )
+      ],
+    ),
+  ).then<void>((value) => resultAlert(value));
+}
+
+void resultAlert(String value) {
+  setState((){
+    _message = 'selected: $value';
+  });
+}
+
+
+---------------------------------------------------------------------
+
+
+▼リスト3-18
+void buttonPressed(){
+  showDialog(
+    context: context,
+    builder: (BuildContext context) => SimpleDialog(
+      title: const Text('Select assignment'),
+      children: <Widget>[
+        SimpleDialogOption(
+          onPressed: () => Navigator.pop<String>(context, 'One'),
+          child: const Text('One'),
+        ),
+        SimpleDialogOption(
+          onPressed: () => Navigator.pop<String>(context, 'Two'),
+          child: const Text('Two'),
+        ),
+        SimpleDialogOption(
+          onPressed: () => Navigator.pop<String>(context, 'Three'),
+          child: const Text('Three'),
+        ),
+      ],
+    ),
+  ).then<void>((value) => resultAlert(value));
+}
+
+
+---------------------------------------------------------------------
+
+
+▼リスト4-1
+class _MyHomePageState extends State<MyHomePage> {
+  static var _message = 'ok';
+  static var _stars = '☆☆☆☆☆';
+  static var _star = 0;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('My App'),
+        leading: BackButton(
+          color: Colors.white,
+        ),
+
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.android),
+            tooltip: 'add star...',
+            onPressed: iconPressedA,
+          ),
+          IconButton(
+            icon: Icon(Icons.favorite),
+            tooltip: 'subtract star...',
+            onPressed: iconPressedB,
+          ),
+        ],
+
+        bottom: PreferredSize(
+          preferredSize: const Size.fromHeight(30.0),
+          child: Center(
+            child: Text(_stars,
+              style: TextStyle(
+                fontSize: 22.0,
+                color:Colors.white,
+              ),
+            ),
+          ),
+        ),
+      ),
+
+      body: Center(
+          child: Text(
+            _message,
+            style: const TextStyle(
+              fontSize: 28.0,
+            ),
+          )
+      ),
+    );
+  }
+
+  void iconPressedA() {
+    _message = 'tap "android".';
+    _star++;
+    update();
+  }
+  void iconPressedB() {
+    _message = 'tap "favorite".';
+    _star--;
+    update();
+  }
+
+  void update() {
+    _star = _star < 0 ? 0 : _star > 5 ? 5 : _star;
+    setState(() {
+      _stars = '★★★★★☆☆☆☆☆'.substring(5 - _star, 5 - _star + 5) ;
+      _message = _message + '[$_star]';
+    });
+  }
+}
+
+
+---------------------------------------------------------------------
+
+
+▼リスト4-2
+class _MyHomePageState extends State<MyHomePage> {
+  static var _message = 'ok';
+  static var _index = 0;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('My App'),
+      ),
+      body: Center(
+        child: Text(
+          _message,
+          style: const TextStyle(
+            fontSize: 28.0,
+          ),
+        )
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _index,
+        backgroundColor: Colors.lightBlueAccent,
+        items: <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            label: 'Android',
+            icon: Icon(Icons.android,color: Colors.black, size: 50),
+          ),
+          BottomNavigationBarItem(
+            label: 'Favorite',
+            icon: Icon(Icons.favorite,color: Colors.red, size: 50),
+          ),
+          BottomNavigationBarItem(
+            label: 'Home',
+            icon: Icon(Icons.home,color: Colors.white, size: 50),
+          ),
+        ],
+        onTap: tapBottomIcon,
+      ),
+    );
+  }
+
+  void tapBottomIcon(int value) {
+    var items = ['Android', 'Heart', 'Home'];
+    setState(() {
+      _index = value;
+      _message = 'you tapped: "' + items[_index] + '".';
+    });
+  }
+}
+
+
+---------------------------------------------------------------------
+
+
+▼リスト4-3
+class _MyHomePageState extends State<MyHomePage> {
+  static var _message = 'ok.';
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('My App'),
+      ),
+
+      body: Column(
+        children: <Widget>[
+          Text(
+            _message,
+            style: TextStyle(
+              fontSize: 32.0,
+            ),
+          ),
+
+          ListView(
+            shrinkWrap: true,
+            padding: const EdgeInsets.all(20.0),
+
+            children: <Widget>[
+
+              Text('First item',
+                style: TextStyle(fontSize: 24.0),
+              ),
+              Text('Second item',
+                style: TextStyle(fontSize: 24.0),
+              ),
+              Text('Third item',
+                style: TextStyle(fontSize: 24.0),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+
+---------------------------------------------------------------------
+
+
+▼リスト4-4
+class _MyHomePageState extends State<MyHomePage> {
+  static var _message = 'ok.';
+  static var _index = 0;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+
+      appBar: AppBar(
+        title: Text('My App'),
+      ),
+
+      body: Column(
+        children: <Widget>[
+          Text(
+            _message,
+            style: TextStyle(
+              fontSize: 32.0,
+            ),
+          ),
+          ListView(
+            shrinkWrap: true,
+            padding: const EdgeInsets.all(20.0),
+            children: <Widget>[
+
+              ListTile(
+                leading: const Icon(Icons.android, size:32),
+                title: const Text('first item',
+                  style: TextStyle(fontSize: 28)),
+                selected: _index == 1,
+                onTap: () {
+                  _index = 1;
+                  tapTile();
+                },
+              ),
+
+              ListTile(
+                leading: const Icon(Icons.favorite, size:32),
+                title: const Text('second item',
+                  style: TextStyle(fontSize: 28)),
+                selected: _index == 2,
+                onTap: () {
+                  _index = 2;
+                  tapTile();
+                },
+              ),
+
+              ListTile(
+                leading: const Icon(Icons.home, size:32),
+                title: const Text('third item',
+                  style: TextStyle(fontSize: 28)),
+                selected: _index == 3,
+                onTap: () {
+                  _index = 3;
+                  tapTile();
+                },
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  void tapTile() {
+    setState(() {
+      _message = 'you tapped: No, $_index.';
+    });
+
+  }
+}
+
+
+---------------------------------------------------------------------
+
+
+▼リスト4-5
+class _MyHomePageState extends State<MyHomePage> {
+
+ @override
+ Widget build(BuildContext context) {
+   return Scaffold(
+
+     appBar: AppBar(
+       title: Text('My App'),
+     ),
+
+     body: SingleChildScrollView(
+       child: Column(
+           mainAxisSize: MainAxisSize.min,
+           mainAxisAlignment: MainAxisAlignment.spaceAround,
+           children: <Widget>[
+             Container(
+               color: Colors.blue,
+               height: 120.0,
+               child: const Center(
+                 child: Text('One',
+               style: const TextStyle(fontSize: 32.0)),
+               ),
+             ),
+             Container(
+               color:Colors.white,
+               height: 120.0,
+               child: const Center(
+                 child: Text('Two',
+               style: const TextStyle(fontSize: 32.0)),
+               ),
+             ),
+             Container(
+               color: Colors.blue,
+               height: 120.0,
+               child: const Center(
+                 child: Text('Three',
+               style: const TextStyle(fontSize: 32.0)),
+               ),
+             ),
+             Container(
+               color:Colors.white,
+               height: 120.0,
+               child: const Center(
+                 child: Text('Four',
+               style: const TextStyle(fontSize: 32.0)),
+               ),
+             ),
+             Container(
+               color: Colors.blue,
+               height: 120.0,
+               child: const Center(
+                 child: Text('Five',
+               style: const TextStyle(fontSize: 32.0)),
+               ),
+             ),
+           ],
+         ),
+       ),
+   );
+ }
+
+}
+
+
+---------------------------------------------------------------------
+
+
+▼リスト4-6
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(MyApp());
+}
+class MyApp extends StatelessWidget {
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Generated App',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+        primaryColor: const Color(0xff2196f3),
+        canvasColor: const Color(0xfffafafa),
+      ),
+      home: FirstScreen(),
+    );
+  }
+}
+
+// １つ目のスクリーン
+class FirstScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Home'),
+      ),
+      body: Center(
+        child: Container(
+          child: const Text('Home Screen',
+              style: const TextStyle(fontSize: 32.0)),
+        ),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: 1,
+        items: <BottomNavigationBarItem>[
+          const BottomNavigationBarItem(
+            label: 'Home',
+            icon: const Icon(Icons.home, size:32),
+          ),
+          const BottomNavigationBarItem(
+            label: 'next',
+            icon: const Icon(Icons.navigate_next, size:32),
+          ),
+        ],
+        onTap: (int value) {
+          if (value == 1)
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context)=>SecondScreen()),
+            );
+        },
+      ),
+    );
+  }
+}
+
+// ２つ目のスクリーン
+class SecondScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("Next"),
+      ),
+      body: Center(
+        child: const Text('Next Screen',
+            style:const TextStyle(fontSize: 32.0)),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: 0,
+        items: <BottomNavigationBarItem>[
+          const BottomNavigationBarItem(
+            label: 'prev',
+            icon: const Icon(Icons.navigate_before, size:32),
+          ),
+          const BottomNavigationBarItem(
+            label: '?',
+            icon: const Icon(Icons.android, size:32),
+          ),
+        ],
+        onTap: (int value) {
+          if (value == 0) Navigator.pop(context);
+        },
+      ),
+    );
+  }
+}
+
+
+---------------------------------------------------------------------
+
+
+▼リスト4-7
+class FirstScreen extends StatefulWidget {
+  FirstScreen({Key? key}) : super(key: key); // コンストラクタ
+
+  @override
+  _FirstScreenState createState() => _FirstScreenState();
+}
+
+class _FirstScreenState extends State<FirstScreen> {
+  static final _controller = TextEditingController();
+  static var _input = '';
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Home'),
+      ),
+      body: Column(
+        children: <Widget>[
+          const Text('Home Screen',
+          style: const TextStyle(fontSize: 32.0)),
+          Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: TextField(
+                controller: _controller,
+                style: const TextStyle(fontSize: 28.0),
+                onChanged: changeField,
+              ),
+          ),
+        ],
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: 1,
+        items: <BottomNavigationBarItem>[
+          const BottomNavigationBarItem(
+            label: 'Home',
+            icon: const Icon(Icons.home),
+          ),
+          const BottomNavigationBarItem(
+            label: 'next',
+            icon: const Icon(Icons.navigate_next),
+          ),
+        ],
+        onTap: (int value) {
+          if (value == 1) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => SecondScreen(_input)),
+            );
+        }
+      },
+    ),
+    );
+  }
+
+  void changeField(String val) => _input = val;
+}
+
+class SecondScreen extends StatelessWidget {
+  final String _value;
+
+  SecondScreen(this._value);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("Next"),
+      ),
+      body: Center(
+        child: Text(
+          'you typed: "$_value".',
+          style: const TextStyle(fontSize: 32.0),
+        ),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: 0,
+        items: <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            label: 'prev',
+            icon: const Icon(Icons.navigate_before),
+          ),
+          BottomNavigationBarItem(
+            label: '?',
+            icon: const Icon(Icons.android),
+          ),
+        ],
+        onTap: (int value) {
+          if (value == 0) Navigator.pop(context);
+        },
+      ),
+    );
+  }
+}
+
+
+---------------------------------------------------------------------
+
+
+▼リスト4-8
+class MyApp extends StatelessWidget {
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Generated App',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+        primaryColor: const Color(0xff2196f3),
+        canvasColor: const Color(0xfffafafa),
+      ),
+      initialRoute: '/',
+      routes: {
+        '/': (context) => FirstScreen(),
+        '/second': (context) => SecondScreen('Second'),
+        '/third': (context) => SecondScreen('Third'),
+      },
+    );
+  }
+}
+
+class FirstScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Home'),
+      ),
+      body: Center(
+        child:const Text('Home Screen',
+          style: const TextStyle(fontSize: 32.0),
+        ),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: 1,
+        items: <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            label: 'Home',
+            icon: const Icon(Icons.home),
+          ),
+          BottomNavigationBarItem(
+            label: 'next',
+            icon: const Icon(Icons.navigate_next),
+          ),
+        ],
+        onTap: (int value) {
+          if (value == 1)
+            Navigator.pushNamed(context, '/second');
+        },
+      ),
+    );
+  }
+}
+
+class SecondScreen extends StatelessWidget {
+  final String _value;
+  SecondScreen(this._value);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Next"),
+      ),
+      body: Center(
+        child: Text(
+          '$_value Screen',
+          style: const TextStyle(fontSize: 32.0),
+        ),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: 0,
+        items: <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            label: 'prev',
+            icon: const Icon(Icons.navigate_before),
+          ),
+          BottomNavigationBarItem(
+            label: '?',
+            icon: const Icon(Icons.android),
+          ),
+        ],
+        onTap: (int value) {
+          if (value == 0) Navigator.pop(context);
+          if (value == 1)
+            Navigator.pushNamed(context, '/third');
+        },
+      ),
+    );
+  }
+}
+
+
+---------------------------------------------------------------------
+
+
+▼リスト4-9
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(MyApp());
+}
+
+class MyApp extends StatelessWidget {
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Generated App',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+        primaryColor: const Color(0xff2196f3),
+        canvasColor: const Color(0xfffafafa),
+      ),
+      home: MyHomePage(),
+    );
+  }
+}
+
+class MyHomePage extends StatefulWidget {
+  MyHomePage({Key? key}) : super(key: key);
+
+  @override
+  _MyHomePageState createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage>
+    with SingleTickerProviderStateMixin {
+
+  static const List<Tab> tabs = <Tab>[
+    Tab(text: 'One'),
+    Tab(text: 'Two'),
+    Tab(text: 'Three'),
+  ];
+
+  late TabController _tabController;
+
+  @override
+  void initState() {
+    super.initState();
+    _tabController = TabController(
+        vsync: this,
+        length: tabs.length
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('My App'),
+        bottom: TabBar(
+          controller: _tabController,
+          tabs: tabs,
+        ),
+      ),
+
+      body: TabBarView(
+        controller: _tabController,
+        children: tabs.map((Tab tab) {
+          return createTab(tab);
+        }).toList(),
+      ),
+    );
+  }
+
+  Widget createTab(Tab tab) {
+    return Center(
+        child: Text(
+          'This is "${tab.text}" Tab.',
+          style: const TextStyle(
+            fontSize: 32.0,
+            color: Colors.blue,
+          ),
+        )
+    );
+  }
+}
+
+
+---------------------------------------------------------------------
+
+
+▼リスト4-10
+static const List<Tab> tabs = <Tab>[
+  Tab(text: 'One', icon: Icon(Icons.star)),
+  Tab(text: 'Two', icon: Icon(Icons.info)),
+  Tab(text: 'Three', icon: Icon(Icons.home)),
+];
+
+
+---------------------------------------------------------------------
+
+
+▼リスト4-11
+@override
+Widget build(BuildContext context) {
+  return Scaffold(
+    appBar: AppBar(
+      title: Text('My App'),
+    ),
+    bottomNavigationBar:Container(
+      color: Colors.blue,
+      child:TabBar(
+        controller: _tabController,
+        tabs: tabs,
+      ),
+    ),
+    body: TabBarView(
+      controller: _tabController,
+      children: tabs.map((Tab tab) {
+        return createTab(tab);
+      }).toList(),
+    ),
+  );
+}
+
+
+---------------------------------------------------------------------
+
+
+▼リスト4-12
+class _MyHomePageState extends State<MyHomePage> {
+  static var _items = <Widget>[];
+  static var _message = 'ok.';
+  static var _tapped = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    for (var i = 0; i < 5; i++) {
+      var item = ListTile(
+          leading: const Icon(Icons.android),
+          title: Text('No, $i'),
+          onTap: (){
+            _tapped = i;
+            tapItem();
+          }
+      );
+      _items.add(item);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Flutter App'),
+      ),
+      body: Center(
+        child: Text(
+          _message,
+          style: const TextStyle(
+            fontSize: 32.0,
+          ),
+        ),
+      ),
+      drawer: Drawer(
+        child: ListView(
+          shrinkWrap: true,
+          padding: const EdgeInsets.all(20.0),
+          children: _items,
+        ),
+      ),
+    );
+  }
+
+  void tapItem() {
+    Navigator.pop(context);
+    setState((){
+      _message = 'tapped:[$_tapped]';
+    });
+  }
+}
+
+
+---------------------------------------------------------------------
+
+
+▼リスト5-1
+class _MyHomePageState extends State<MyHomePage> {
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Color.fromARGB(255, 255, 255, 255),
+      appBar: AppBar(
+        title: Text('App Name', style: TextStyle(fontSize: 30.0),),
+      ),
+      body:Container(
+        child: CustomPaint(
+          painter: MyPainter(),
+        ),
+      ),
+    );
+  }
+}
+
+class MyPainter extends CustomPainter{
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    Paint p = Paint();
+
+    p.style = PaintingStyle.fill;
+    p.color = Color.fromARGB(150, 0, 200, 255);
+    Rect r = Rect.fromLTWH(50.0, 50.0, 150.0, 150.0);
+    canvas.drawRect(r, p);
+
+    p.style = PaintingStyle.stroke;
+    p.color = Color.fromARGB(150, 200, 0, 255);
+    p.strokeWidth = 10.0;
+    r = Rect.fromLTWH(100.0, 100.0, 150.0, 150.0);
+    canvas.drawRect(r, p);
+  }
+
+  @override
+  bool shouldRepaint(CustomPainter oldDelegate) => true;
+}
+
+
+---------------------------------------------------------------------
+
+
+▼リスト5-2
+@override
+void paint(Canvas canvas, Size size) {
+  Paint p = Paint();
+
+  // 正円の描画
+  p.style = PaintingStyle.fill;
+  p.color = Color.fromARGB(150, 0, 200, 255);
+  Offset ctr = Offset(100.0, 100.0);
+  canvas.drawCircle(ctr, 75.0, p);
+
+  // 楕円１の描画
+  p.style = PaintingStyle.stroke;
+  p.color = Color.fromARGB(150, 200, 0, 255);
+  p.strokeWidth = 10.0;
+  Rect r = Rect.fromLTWH(100.0, 50.0, 200.0, 150.0);
+  canvas.drawOval(r, p);
+
+  // 楕円２の描画
+  r = Rect.fromLTWH(50.0, 100.0, 150.0, 200.0);
+  canvas.drawOval(r, p);
+}
+
+
+---------------------------------------------------------------------
+
+
+▼リスト5-3
+@override
+void paint(Canvas canvas, Size size) {
+  Paint p = Paint();
+
+  p.style = PaintingStyle.stroke;
+  p.strokeWidth = 5.0;
+  p.color = Color.fromARGB(150, 0, 200, 255);
+  for (var i = 0; i <= 10; i++) {
+    Rect r = Rect.fromLTRB(
+        50.0 + 20 * i, 50.0,
+        50.0, 250.0 - 20 * i);
+    canvas.drawLine(r.topLeft, r.bottomRight, p);
+  }
+}
+
+
+---------------------------------------------------------------------
+
+
+▼リスト5-4
+// import 'dart:ui' as ui; を追記
+
+@override
+void paint(Canvas canvas, Size size) {
+  Paint p = Paint();
+
+  ui.ParagraphBuilder builder = ui.ParagraphBuilder(
+    ui.ParagraphStyle(textDirection: TextDirection.ltr),
+  )
+    ..pushStyle(ui.TextStyle(color: Colors.red, fontSize: 48.0))
+    ..addText('Hello! ')
+    ..pushStyle(ui.TextStyle(color: Colors.blue[700], fontSize: 30.0))
+    ..addText('This is a sample of paragraph text. ')
+    ..pushStyle(ui.TextStyle(color: Colors.blue[200], fontSize: 30.0))
+    ..addText('You can draw MULTI-FONT text!');
+
+  ui.Paragraph paragraph = builder.build()
+    ..layout(ui.ParagraphConstraints(width: 300.0));
+
+  Offset off = Offset(50.0, 50.0);
+  canvas.drawParagraph(paragraph, off);
+}
+
+
+---------------------------------------------------------------------
+
+
+▼リスト5-5
+flutter:
+  assets:
+     - assets/images/image.jpg
+
+
+---------------------------------------------------------------------
+
+
+▼リスト5-6
+// 以下のimportを用意する
+// import 'package:flutter/material.dart';
+// import 'package:flutter/services.dart';
+// import 'dart:typed_data';
+// import 'dart:ui' as ui;
+
+class _MyHomePageState extends State<MyHomePage> {
+  static ui.Image? _img = null;
+  static bool _flg = false;
+
+  Future<void> loadAssetImage(String fname) async {
+    final bd = await rootBundle.load("assets/images/$fname");
+    final Uint8List u8lst = await Uint8List.view(bd.buffer);
+    final codec = await ui.instantiateImageCodec(u8lst);
+    final frameInfo = await codec.getNextFrame();
+    _img = frameInfo.image;
+    setState(()=> _flg = true);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    loadAssetImage('image.jpg');
+
+    return Scaffold(
+      backgroundColor: Color.fromARGB(255, 255, 255, 255),
+      appBar: AppBar(
+        title: Text('App Name', style: TextStyle(fontSize: 30.0),),
+      ),
+      body:Container(
+        child: CustomPaint(
+          painter: MyPainter(_img),
+        ),
+      ),
+    );
+  }
+}
+
+class MyPainter extends CustomPainter{
+  ui.Image? _img = null;
+
+  MyPainter(this._img) ;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    Paint p = Paint();
+
+    Offset off = Offset(50.0, 50.0);
+    if (_img != null) {
+      canvas.drawImage(_img!, off, p);
+    }
+  }
+
+  @override
+  bool shouldRepaint(CustomPainter oldDelegate) => true;
+}
+
+
+---------------------------------------------------------------------
+
+
+▼リスト5-7
+@override
+void paint(Canvas canvas, Size size) {
+  Paint p = Paint();
+  final _img = this._img;
+  if (_img != null) {
+    Rect r0 = Rect.fromLTWH(0.0, 0.0, _img.width.toDouble(), _img.height.toDouble());
+    Rect r = Rect.fromLTWH(50.0, 50.0, 100.0, 100.0);
+    canvas.drawImageRect(_img, r0, r, p);
+    r = Rect.fromLTWH(50.0, 250.0, 200.0, 100.0);
+    canvas.drawImageRect(_img, r0, r, p);
+    r = Rect.fromLTWH(250.0, 50.0, 100.0, 200.0);
+    canvas.drawImageRect(_img, r0, r, p);
+  }
+}
+
+
+---------------------------------------------------------------------
+
+
+▼リスト5-8
+class _MyHomePageState extends State<MyHomePage> {
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Color.fromARGB(255, 255, 255, 255),
+      appBar: AppBar(
+        title: Text('App Name', style: TextStyle(fontSize: 30.0),),
+      ),
+      body:Container(
+        child: CustomPaint(
+          painter: MyPainter(),
+        ),
+      ),
+    );
+  }
+}
+
+class MyPainter extends CustomPainter{
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    Path path = Path();
+    Rect r = Rect.fromLTWH(50.0, 50.0, 75.0, 75.0);
+    path.addOval(r);
+    r = Rect.fromLTWH(75.0, 75.0, 125.0, 125.0);
+    path.addOval(r);
+    r = Rect.fromLTWH(125.0, 125.0, 175.0, 175.0);
+    path.addOval(r);
+
+    Paint p = Paint();
+    p.color = Color.fromARGB(150, 255, 0, 0);
+    p.style = PaintingStyle.fill;
+    canvas.drawPath(path, p);
+  }
+
+  @override
+  bool shouldRepaint(CustomPainter oldDelegate) => true;
+}
+
+
+---------------------------------------------------------------------
+
+
+▼リスト5-9
+// import 'dart:math';
+
+@override
+void paint(Canvas canvas, Size size) {
+  Path path = Path();
+  Rect r = Rect.fromLTWH(50.0, 50.0, 75.0, 75.0);
+  path.addOval(r);
+  r = Rect.fromLTWH(75.0, 75.0, 125.0, 125.0);
+  path.addOval(r);
+  r = Rect.fromLTWH(125.0, 125.0, 175.0, 175.0);
+  path.addOval(r);
+
+  canvas.save();
+
+  Paint p = Paint();
+  p.color = Color.fromARGB(150, 255, 0, 0);
+  p.style = PaintingStyle.fill;
+  canvas.drawPath(path, p);
+
+  canvas.translate(0.0, 100.0);
+  p.color = Color.fromARGB(150, 0, 0, 255);
+  canvas.drawPath(path, p);
+
+  p.color = Color.fromARGB(150, 0, 255, 0);
+  canvas.rotate(-0.5 * pi);
+  canvas.translate(-500.0, 50.0);
+  canvas.scale(1 * 1.5);
+  canvas.drawPath(path, p);
+
+  canvas.restore();
+}
+
+
+---------------------------------------------------------------------
+
+
+▼リスト5-10
+class _MyHomePageState extends State<MyHomePage> {
+  static List<Offset> _points = [];
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Color.fromARGB(255, 255, 255, 255),
+      appBar: AppBar(
+        title: Text('App Name', style: TextStyle(fontSize: 30.0),),
+      ),
+      body: Center(
+        child: Listener(
+          onPointerDown: _addPoint,
+          child: CustomPaint(
+            painter: MyPainter(_points),
+            child: Center(),
+          ),
+        ),
+      )
+    );
+  }
+
+  void _addPoint(PointerDownEvent event) {
+    setState((){
+      _points.add(event.localPosition);
+    });
+  }
+}
+
+class MyPainter extends CustomPainter{
+  final List<Offset> _points;
+
+  MyPainter(this._points);
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    Paint p = Paint();
+
+    p.style = PaintingStyle.fill;
+    p.color = Color.fromARGB(100, 0, 200, 100);
+    for(var pos in _points) {
+      Rect r = Rect.fromLTWH(pos.dx - 25, pos.dy - 25, 50.0, 50.0);
+      canvas.drawOval(r, p);
+    }
+  }
+
+  @override
+  bool shouldRepaint(CustomPainter oldDelegate) => true;
+}
+
+
+---------------------------------------------------------------------
+
+
+▼リスト5-11
+class _MyHomePageState extends State<MyHomePage> {
+  static double _value = 0;
+  static double _opaq = 0;
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Color.fromARGB(255, 255, 255, 255),
+      appBar: AppBar(
+        title: Text('App Name', style: TextStyle(fontSize: 30.0),),
+      ),
+      body: Column(
+        children: [
+          Padding(padding: EdgeInsets.all(10)),
+          Container(
+            width: 300,
+            height: 300,
+            child: CustomPaint(
+              painter: MyPainter(_value, _opaq.toInt()),
+              child: Center(),
+            ),
+          ),
+          Slider(
+            min:0.0,
+            max:300.0,
+            value:_value,
+            onChanged: _changeVal,
+          ),
+          Slider(
+            min:0.0,
+            max:255.0,
+            value:_opaq,
+            onChanged: _changeOpaq,
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _changeVal(double value) {
+    setState((){
+      _value = value;
+    });
+  }
+  void _changeOpaq(double value) {
+    setState((){
+      _opaq = value;
+    });
+  }
+}
+
+class MyPainter extends CustomPainter{
+  final double _value;
+  final int _opaq;
+
+  MyPainter(this._value, this._opaq);
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    Paint p = Paint();
+
+    p.style = PaintingStyle.fill;
+    p.color = Color.fromARGB(_opaq, 0, 200, 100);
+    Rect r = Rect.fromLTWH(
+        (size.width - _value) / 2,
+        (size.height - _value) / 2,
+        _value, _value);
+    canvas.drawOval(r, p);
+
+    r = Rect.fromLTWH(0, 0, size.width, size.height);
+    p.style = PaintingStyle.stroke;
+    p.color = Color.fromARGB(255, 100, 100, 100);
+    canvas.drawRect(r, p);
+  }
+
+  @override
+  bool shouldRepaint(CustomPainter oldDelegate) => true;
+}
+
+
+---------------------------------------------------------------------
+
+
+▼リスト5-12
+class _MyHomePageState extends State<MyHomePage> {
+  static ValueNotifier<int> _value = ValueNotifier<int>(0);
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Color.fromARGB(255, 255, 255, 255),
+      appBar: AppBar(
+        title: Text('App Name', style: TextStyle(fontSize: 30.0),),
+      ),
+      body: Center(
+        child:Column(
+          children: [
+            Padding(padding: EdgeInsets.all(10)),
+            Container(
+                width: 300,
+                height: 300,
+                child: CustomPaint(
+                  painter: MyPainter(_value),
+                  child: Center(),
+                ),
+              ),
+            Padding(padding: EdgeInsets.all(5)),
+            ElevatedButton(
+              child: Text("Click",
+                style: TextStyle(fontSize: 32),),
+              onPressed: ()=>_value.value++,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class MyPainter extends CustomPainter{
+  final ValueNotifier<int> _value;
+
+  MyPainter(this._value);
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    Paint p = Paint();
+    p.style = PaintingStyle.fill;
+    p.color = Color.fromARGB(50, 0, 255, 255);
+    Rect r;
+    for(var i = 0; i < _value.value; i++){
+      r = Rect.fromLTWH(10+i*20,10+i*20,100,100);
+      canvas.drawRect(r, p);
+    }
+    r = Rect.fromLTWH(0, 0, size.width, size.height);
+    p.style = PaintingStyle.stroke;
+    p.color = Color.fromARGB(255, 100, 100, 100);
+    canvas.drawRect(r, p);
+    if (_value.value > 10) _value.value = 0;
+  }
+
+  @override
+  bool shouldRepaint(CustomPainter oldDelegate) => true;
+}
+
+
+---------------------------------------------------------------------
+
+
+▼リスト5-13
+class _MyHomePageState extends State<MyHomePage>
+      with SingleTickerProviderStateMixin {
+  late Animation<double> animation;
+  late AnimationController controller;
+
+  @override
+  void initState() {
+    super.initState();
+    controller = AnimationController(
+      duration: const Duration(seconds: 3),
+      vsync: this
+    );
+    animation = Tween<double>(begin: 0, end: pi*2).animate(controller)
+      ..addListener(() {
+        setState(() {
+        });
+      });
+    controller.repeat(reverse: false);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Color.fromARGB(255, 255, 255, 255),
+      appBar: AppBar(
+        title: Text('App Name', style: TextStyle(fontSize: 30.0),),
+      ),
+      body: Center(
+        child:Column(
+          children: [
+            Padding(padding: EdgeInsets.all(10)),
+            Container(
+                width: 300,
+                height: 300,
+                child: CustomPaint(
+                  painter: MyPainter(animation.value),
+                  child: Center(),
+                ),
+              ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class MyPainter extends CustomPainter{
+  final double value;
+
+  MyPainter(this.value);
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    Paint p = Paint();
+    canvas.save();
+
+    p.style = PaintingStyle.fill;
+    p.color = Color.fromARGB(100, 255, 0, 255);
+    Rect r = Rect.fromLTWH(0,0,250, 250);
+    canvas.translate(150, 250);
+    canvas.rotate(value);
+    canvas.translate(-125, -125);
+    canvas.drawRect(r, p);
+
+    canvas.restore();
+    p.style = PaintingStyle.stroke;
+    p.strokeWidth = 25;
+    p.color = Color.fromARGB(100, 0, 255, 255);
+    r = Rect.fromLTWH(0,0,250, 250);
+    canvas.translate(150, 250);
+    canvas.rotate(value * -1);
+    canvas.translate(-125, -125);
+    canvas.drawRect(r, p);
+  }
+
+  @override
+  bool shouldRepaint(CustomPainter oldDelegate) => true;
+}
+
+
+---------------------------------------------------------------------
+
+
+▼リスト5-14
+class _MyHomePageState extends State<MyHomePage> {
+  bool flg = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('App Name', style: TextStyle(fontSize: 30.0),),
+      ),
+      body: Padding(
+          padding: EdgeInsets.all(20),
+        child:Column(
+          children: [
+            AnimatedAlign(
+              alignment: flg ? Alignment.topLeft : Alignment.topRight,
+              duration: const Duration(seconds: 1),
+              child: Container(
+                color: Colors.red,
+                width: 100,
+                height: 100,
+              ),
+              curve: Curves.linear,
+            ),
+          ],
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          setState(() {
+            flg = !flg;
+          });
+        },
+        child: const Icon(Icons.star),
+      ),
+    );
+  }
+}
+
+
+---------------------------------------------------------------------
+
+
+▼リスト5-15
+body: Padding(
+  padding: EdgeInsets.all(20),
+  child:Column(
+    children: [
+      AnimatedDefaultTextStyle(
+        duration: const Duration(seconds: 1),
+        style: TextStyle(
+          fontSize: flg ? 48 : 96,
+          fontWeight: FontWeight.bold,
+          color: flg ? Colors.red : Colors.blue
+        ),
+        child: Text("Hello Flutter!"),
+      ),
+    ],
+  ),
+),
+
+
+---------------------------------------------------------------------
+
+
+▼リスト5-16
+body: Padding(
+  padding: EdgeInsets.all(20),
+  child:Stack(
+    children: [
+      AnimatedPositioned(
+        duration: Duration(seconds: 3),
+        top: flg ? 300 : 0,
+        left: flg ? 0 : 300,
+        child: Container(
+          color: Colors.red,
+          width: 100,
+          height: 100,
+        ),
+      ),
+    ],
+  ),
+),
+
+
+---------------------------------------------------------------------
+
+
+▼リスト5-17
+body: Padding(
+  padding: EdgeInsets.all(20),
+  child:Column(
+    children: [
+      AnimatedCrossFade(
+        duration: const Duration(seconds: 1),
+        firstChild: const FlutterLogo(
+            style: FlutterLogoStyle.horizontal,
+            size: 300.0),
+        secondChild: const FlutterLogo(
+            style: FlutterLogoStyle.stacked,
+            size: 300.0),
+        crossFadeState: flg
+            ? CrossFadeState.showFirst
+            : CrossFadeState.showSecond,
+      )
+    ],
+  ),
+),
+
+
+---------------------------------------------------------------------
+
+
+▼リスト5-18
+body: Padding(
+  padding: EdgeInsets.all(20),
+  child:Column(
+    children: [
+      AnimatedContainer(
+        duration: const Duration(seconds: 1),
+        color: flg ? Colors.red : Colors.yellow,
+        width: flg ? 100 : 300,
+        height: flg ? 300 : 100,
+      ),
+    ],
+  ),
+),
+
+
+---------------------------------------------------------------------
+
+
+▼リスト6-1
+dependencies:
+  flutter:
+    sdk: flutter
+  path_provider: any
+
+
+---------------------------------------------------------------------
+
+
+▼リスト6-2
+import 'package:flutter/material.dart';
+import 'dart:ui' as ui;
+import 'dart:io';
+import 'package:path_provider/path_provider.dart';
+
+void main()=> runApp(MyApp());
+
+class MyApp extends StatelessWidget {
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Generated App',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+        primaryColor: const Color(0xff2196f3),
+        canvasColor: const Color(0xfffafafa),
+      ),
+      home: MyHomePage(),
+    );
+  }
+}
+
+class MyHomePage extends StatefulWidget {
+  const MyHomePage({Key? key}) : super(key: key);
+
+  @override
+  _MyHomePageState createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+  final _controller = TextEditingController();
+  final _fname = 'flutter_sampledata.txt';
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Home'),
+      ),
+      body: Padding(
+        padding: EdgeInsets.all(20.0),
+        child:Column(
+          children:<Widget>[
+            Text('FILE ACCESS.',
+              style: TextStyle(fontSize: 32,
+                fontWeight: ui.FontWeight.w500),
+            ),
+            Padding(padding: EdgeInsets.all(10.0)),
+            TextField(
+              controller: _controller,
+              style: TextStyle(fontSize: 24),
+              minLines: 1,
+              maxLines: 5,
+            )
+          ],
+        ),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: Colors.blue,
+        selectedItemColor: Colors.white,
+        unselectedItemColor: Colors.white,
+        currentIndex: 0,
+        items: <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            label: 'Save',
+            icon: Icon(Icons.save, color: Colors.white, size:32),
+          ),
+          BottomNavigationBarItem(
+            label: 'Load',
+            icon: Icon(Icons.open_in_new, color: Colors.white, size:32),
+          ),
+        ],
+        onTap: (int value) async {
+          switch (value) {
+            case 0:
+              saveIt(_controller.text);
+              setState(() {
+                _controller.text = '';
+              });
+              showDialog(
+                context: context,
+                builder: (BuildContext context) => AlertDialog(
+                  title: Text("saved!"),
+                  content: Text("save message to file."),
+                )
+              );
+              break;
+            case 1:
+            String value =  await loadIt();
+            setState(() {
+              _controller.text = value;
+            });
+            showDialog(
+              context: context,
+              builder: (BuildContext context) => AlertDialog(
+                title: Text("loaded!"),
+                content: Text("load message from file."),
+              )
+            );
+            break;
+            default:
+              print('no defalut.');
+          }
+        },
+      ),
+    );
+  }
+
+  Future<File> getDataFile(String filename) async {
+    final directory = await getApplicationDocumentsDirectory();
+    return File(directory.path + '/' + filename);
+  }
+
+  void saveIt(String value) async {
+    final file = await getDataFile(_fname);
+    file.writeAsString(value);
+  }
+
+  Future<String> loadIt() async {
+    try {
+      final file = await getDataFile(_fname);
+      return file.readAsString();
+    } catch (e) {
+      return '*** no data ***';
+    }
+  }
+}
+
+
+---------------------------------------------------------------------
+
+
+▼リスト6-3
+This is sample text.
+これは、サンプルのテキストです。
+
+
+---------------------------------------------------------------------
+
+
+▼リスト6-4
+flutter:
+  assets:
+    - assets/images/image.jpg
+    - assets/documents/data.txt
+
+
+---------------------------------------------------------------------
+
+
+▼リスト6-5
+// import 'package:flutter/material.dart';
+// import 'package:flutter/services.dart';
+// import 'dart:ui' as ui;
+
+class _MyHomePageState extends State<MyHomePage> {
+  final _controller = TextEditingController();
+  final _fname = 'assets/documents/data.txt';
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        appBar: AppBar(
+          title: Text('Home'),
+        ),
+        body: Padding(
+          padding: EdgeInsets.all(20.0),
+          child: Column(
+            children: <Widget>[
+              Text('RESOURCE ACCESS.',
+                style: TextStyle(fontSize: 32,
+                  fontWeight: ui.FontWeight.w500),
+              ),
+              Padding(padding: EdgeInsets.all(10.0)),
+              TextField(
+                controller: _controller,
+                style: TextStyle(fontSize: 24,),
+                minLines: 1,
+                maxLines: 5,
+              )
+            ],
+          ),
+        ),
+        floatingActionButton: FloatingActionButton(
+          child: Icon(Icons.open_in_new),
+          onPressed: () async {
+            final value = await loadIt();
+            setState(() {
+              _controller.text = value;
+            });
+            showDialog(
+              context: context,
+              builder: (BuildContext context) =>
+                AlertDialog(
+                  title: Text("loaded!"),
+                  content: Text("load message from Asset."),
+                )
+            );
+          }
+        )
+    );
+  }
+
+  Future<String> getDataAsset(String path) async {
+    return await rootBundle.loadString(path);
+  }
+
+  Future<String> loadIt() async {
+    try {
+      final res = await getDataAsset(_fname);
+      return res;
+    } catch (e) {
+      return '*** no data ***';
+    }
+  }
+}
+
+
+---------------------------------------------------------------------
+
+
+▼リスト6-6
+dependencies:
+  flutter:
+    sdk: flutter
+  path_provider: any
+  shared_preferences: any
+
+
+---------------------------------------------------------------------
+
+
+▼リスト6-7
+// import 'package:flutter/material.dart';
+// import 'package:shared_preferences/shared_preferences.dart';
+// import 'dart:ui' as ui;
+
+class _MyHomePageState extends State<MyHomePage> {
+  final _controller = TextEditingController();
+  double _r = 0.0;
+  double _g = 0.0;
+  double _b = 0.0;
+
+  @override
+  void initState() {
+    super.initState();
+    loadPref();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        appBar: AppBar(
+          title: Text('Home'),
+        ),
+        body: Padding(
+          padding: EdgeInsets.all(20.0),
+          child: Column(
+            children: <Widget>[
+              Text('PREFERENCES ACCESS.',
+                style: TextStyle(fontSize: 32,
+                    fontWeight: ui.FontWeight.w500),
+              ),
+              Padding(padding: EdgeInsets.all(10.0)),
+              TextField(
+                controller: _controller,
+                style: TextStyle(fontSize: 24,),
+                minLines: 1,
+                maxLines: 5,
+              ),
+              Padding(padding: EdgeInsets.all(10.0)),
+              Slider(
+                min: 0.0,
+                max: 255.0,
+                value: _r,
+                divisions: 255,
+                onChanged: (double value) {
+                  setState(() {
+                    _r = value;
+                  });
+                },
+              ),
+              Slider(
+                min: 0.0,
+                max: 255.0,
+                value: _g,
+                divisions: 255,
+                onChanged: (double value) {
+                  setState(() {
+                    _g = value;
+                  });
+                },
+              ),
+              Slider(
+                min: 0.0,
+                max: 255.0,
+                value: _b,
+                divisions: 255,
+                onChanged: (double value) {
+                  setState(() {
+                    _b = value;
+                  });
+                },
+              ),
+              Container(
+                padding: EdgeInsets.all(20),
+                width: 125,
+                height: 125,
+                color: Color.fromARGB(255,
+                    _r.toInt(), _g.toInt(), _b.toInt()),
+              ),
+            ],
+          ),
+        ),
+        floatingActionButton: FloatingActionButton(
+          child: Icon(Icons.open_in_new),
+          onPressed: () {
+            savePref();
+            showDialog(
+                context: context,
+                builder: (BuildContext context) => AlertDialog(
+                  title: Text("saved!"),
+                  content: Text("save preferences."),
+                )
+            );
+          },
+        ),
+      );
+  }
+
+  void loadPref() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState((){
+      _r = (prefs.getDouble('r') ?? 0.0);
+      _g = (prefs.getDouble('g') ?? 0.0);
+      _b = (prefs.getDouble('b') ?? 0.0);
+      _controller.text = (prefs.getString('input') ?? '');
+    });
+  }
+
+  void savePref() async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setDouble('r', _r);
+    prefs.setDouble('g', _g);
+    prefs.setDouble('b', _b);
+    prefs.setString('input', _controller.text);
+  }
+}
+
+
+---------------------------------------------------------------------
+
+
+▼リスト6-8
+// import 'dart:convert';
+// import 'dart:io';
+// import 'package:flutter/material.dart';
+// import 'dart:ui' as ui;
+
+class _MyHomePageState extends State<MyHomePage> {
+  final _controller = TextEditingController();
+  static const host = 'baconipsum.com';
+  static const path = '/api/?type=meat-and-filler&paras=1&format=text';
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Home'),
+      ),
+      body: Padding(
+        padding: EdgeInsets.all(20.0),
+        child: Column(
+          children: <Widget>[
+            Text('INTERNET ACCESS.',
+              style: TextStyle(fontSize: 32,
+                  fontWeight: ui.FontWeight.w500),
+            ),
+            Padding(padding: EdgeInsets.all(10.0)),
+            TextField(
+              controller: _controller,
+              style: TextStyle(fontSize: 24,),
+              minLines: 1,
+              maxLines: 5,
+            ),
+          ],
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.open_in_new),
+        onPressed: () {
+          getData();
+          showDialog(
+              context: context,
+              builder: (BuildContext context) => AlertDialog(
+                title: Text("loaded!"),
+                content: Text("get content from URI."),
+              )
+          );
+        },
+      ),
+    );
+  }
+
+  void getData() async {
+    var http = await HttpClient();
+    HttpClientRequest request = await http.get(host, 80, path);
+    HttpClientResponse response = await request.close();
+    final value = await response.transform(utf8.decoder).join();
+    _controller.text = value;
+  }
+}
+
+
+---------------------------------------------------------------------
+
+
+▼リスト6-9
+static const url = 'https://baconipsum.com/api/?type=meat-and-filler&paras=1&format=text';
+
+
+---------------------------------------------------------------------
+
+
+▼リスト6-10
+void getData() async {
+  var https = await HttpClient();
+  HttpClientRequest request = await https.getUrl(Uri.parse(url));
+  HttpClientResponse response = await request.close();
+  final value = await response.transform(utf8.decoder).join();
+  _controller.text = value;
+}
+
+
+---------------------------------------------------------------------
+
+
+▼リスト6-11
+void setData() async {
+  final ob = {
+    "title":"foo",
+    "author":"SYODA-Tuyano",
+    "content":"this is content. これはサンプルのコンテンツです。"
+  };
+  final jsondata = json.encode(ob);
+  var https = await HttpClient();
+  HttpClientRequest request = await https.postUrl(Uri.parse(url));
+  request.headers.set(HttpHeaders.contentTypeHeader, "application/json; charset=UTF-8");
+  request.write(jsondata);
+  HttpClientResponse response = await request.close();
+  final value = await response.transform(utf8.decoder).join();
+  _controller.text = value;
+}
+
+
+---------------------------------------------------------------------
+
+
+▼リスト7-1
+import 'package:flutter/material.dart';
+import 'dart:ui' as ui;
+import 'dart:convert';
+import 'dart:io';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+
+
+---------------------------------------------------------------------
+
+
+▼リスト7-2
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  runApp(MyApp());
+}
+
+
+---------------------------------------------------------------------
+
+
+▼リスト7-3
+void fire() async {
+  FirebaseFirestore firestore = FirebaseFirestore.instance;
+  final snapshot = await firestore.collection('mydata').get();
+  var msg = '';
+  snapshot.docChanges.forEach((element) {
+    final name = element.doc.get('name');
+    final mail = element.doc.get('mail');
+    final age = element.doc.get('age');
+    msg += "${name} (${age}) <${mail}>\n";
+  });
+  _controller.text = msg;
+}
+
+
+---------------------------------------------------------------------
+
+
+▼リスト7-4
+onPressed: () {
+  fire();
+},
+
+
+---------------------------------------------------------------------
+
+
+▼リスト7-5
+void fire() async {
+  var msg = _controller.text;
+  FirebaseFirestore firestore = FirebaseFirestore.instance;
+  final snapshot = await firestore.collection('mydata')
+      .where('name', isEqualTo: msg).get();
+  snapshot.docChanges.forEach((element) {
+    final name = element.doc.get('name');
+    final mail = element.doc.get('mail');
+    final age = element.doc.get('age');
+    msg += "\n${name} (${age}) <${mail}>";
+  });
+  _controller.text = msg;
+}
+
+
+---------------------------------------------------------------------
+
+
+▼リスト7-6
+void fire() async {
+  var msg = _controller.text;
+  FirebaseFirestore firestore = FirebaseFirestore.instance;
+  final snapshot = await firestore.collection('mydata')
+      .orderBy('name', descending: false)
+      .startAt([msg])
+      .endAt([msg + '\uf8ff'])
+      .get();
+  snapshot.docChanges.forEach((element) {
+    final name = element.doc.get('name');
+    final mail = element.doc.get('mail');
+    final age = element.doc.get('age');
+    msg += "\n${name} (${age}) <${mail}>";
+  });
+  _controller.text = msg;
+}
+
+
+---------------------------------------------------------------------
+
+
+▼リスト7-7
+@override
+void initState() {
+  super.initState();
+  fire();
+}
+
+void addDoc() async {
+  var msg = _controller.text;
+  final input = msg.split(',');
+  final data = {
+    'name': input[0],
+    'mail': input[1],
+    'age': input[2]
+  };
+  FirebaseFirestore firestore = FirebaseFirestore.instance;
+  final snapshot = await firestore.collection('mydata')
+    .add(data);
+  fire();
+}
+
+void fire() async {
+  var msg = '';
+  FirebaseFirestore firestore = FirebaseFirestore.instance;
+  final snapshot = await firestore.collection('mydata')
+      .orderBy('name', descending: false).get();
+  snapshot.docChanges.forEach((element) {
+    final name = element.doc.get('name');
+    final mail = element.doc.get('mail');
+    final age = element.doc.get('age');
+    msg += "\n${name} (${age}) <${mail}>";
+  });
+  _controller.text = msg;
+}
+
+
+---------------------------------------------------------------------
+
+
+▼リスト7-8
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /{document=**} {
+      allow read, write: if
+          request.time < timestamp.date(……);
+    }
+  }
+}
+
+
+---------------------------------------------------------------------
+
+
+▼リスト7-9
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+
+
+---------------------------------------------------------------------
+
+
+▼リスト7-10
+Future<UserCredential> signInWithGoogle() async {
+  final GoogleSignInAccount?
+    googleUser = await GoogleSignIn().signIn();
+  final GoogleSignInAuthentication?
+    googleAuth = await googleUser?.authentication;
+  final credential = GoogleAuthProvider.credential(
+    accessToken: googleAuth?.accessToken,
+    idToken: googleAuth?.idToken,
+  );
+  return await FirebaseAuth.instance
+      .signInWithCredential(credential);
+}
+
+
+---------------------------------------------------------------------
+
+
+▼リスト7-11
+void doSignin() {
+  signInWithGoogle().then((value) {
+    if (value.user != null) {
+      fire();
+    }
+  });
+}
+
+
+---------------------------------------------------------------------
+
+
+▼リスト7-12
+floatingActionButton: FloatingActionButton(
+  child: Icon(Icons.open_in_new),
+  onPressed: () {
+    doSignin();
+  },
+),
+
+
+---------------------------------------------------------------------
+
+
+▼リスト7-13
+<meta name="google-signin-client_id" content="クライアントID">
+
+
+---------------------------------------------------------------------
+
+
+▼リスト7-14
+void signInWithMail() async {
+  try {
+    final credential = await FirebaseAuth.instance
+        .signInWithEmailAndPassword(
+      email: メールアドレス
+      password: パスワード
+    );
+  } on FirebaseAuthException catch (e) {
+    print(e.message);
+  }
+}
+
+
+---------------------------------------------------------------------
+
+
+▼リスト8-1
+import 'package:flame/game.dart';
+import 'package:flutter/material.dart';
+
+void main() => runApp(MyApp());
+
+class MyApp extends StatelessWidget {
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Generated App',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+        primaryColor: const Color(0xff2196f3),
+        canvasColor: const Color(0xfffafafa),
+      ),
+      home: MyHomePage(),
+    );
+  }
+}
+
+class MyHomePage extends StatefulWidget {
+  MyHomePage({Key? key}) : super(key: key);
+  @override
+  _MyHomePageState createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+
+        appBar: AppBar(
+          title: Text('My App'),
+        ),
+
+        body: GameWidget(game: SampleGame())
+    );
+  }
+
+}
+
+class SampleGame extends FlameGame {
+  late final paint;
+
+  @override
+  Future<void> onLoad() async {
+    await super.onLoad();
+    paint = Paint();
+    paint.color = Colors.blue;
+  }
+
+  @override
+  void render(Canvas canvas) {
+    super.render(canvas);
+    final rect = Rect.fromLTWH(100, 100, 100, 100);
+    canvas.drawOval(rect, paint);
+  }
+}
+
+
+---------------------------------------------------------------------
+
+
+▼リスト8-2
+// import 'package:flame/input.dart';
+// import 'package:flutter/services.dart';
+
+class SampleGame extends FlameGame with KeyboardEvents {
+  late final paint;
+  late Vector2 _loc;
+
+  @override
+  Future<void> onLoad() async {
+    await super.onLoad();
+    paint = Paint();
+    paint.color = Colors.blue;
+    _loc = Vector2(100, 100);
+  }
+
+  @override
+  void render(Canvas canvas) {
+    super.render(canvas);
+    final rect = Rect.fromLTWH(_loc.x, _loc.y, 100, 100);
+    canvas.drawOval(rect, paint);
+  }
+
+@override
+  KeyEventResult onKeyEvent(
+      RawKeyEvent event,
+      Set<LogicalKeyboardKey> keysPressed,
+  ) {
+    final _dpos = Vector2(0, 0);
+
+    if (event.character == 'j') {
+      _dpos.x = -10;
+    }
+    if (event.character == 'l') {
+      _dpos.x = 10;
+    }
+    if (event.character == 'i') {
+      _dpos.y = -10.0;
+    }
+    if (event.character == 'k') {
+      _dpos.y = 10.0;
+    }
+    _loc += _dpos;
+    return KeyEventResult.handled;
+  }
+}
+
+
+---------------------------------------------------------------------
+
+
+▼リスト8-3
+@override
+KeyEventResult onKeyEvent(
+    RawKeyEvent event,
+    Set<LogicalKeyboardKey> keysPressed,
+) {
+  final _dpos = Vector2(0, 0);
+
+  if (keysPressed.contains(LogicalKeyboardKey.arrowLeft)) {
+    _dpos.x = -10;
+  }
+  if (keysPressed.contains(LogicalKeyboardKey.arrowRight)) {
+    _dpos.x = 10;
+  }
+  if (keysPressed.contains(LogicalKeyboardKey.arrowUp)) {
+    _dpos.y = -10.0;
+  }
+  if (keysPressed.contains(LogicalKeyboardKey.arrowDown)) {
+    _dpos.y = 10.0;
+  }
+  _loc += _dpos;
+  return KeyEventResult.handled;
+}
+
+
+---------------------------------------------------------------------
+
+
+▼リスト8-4
+flutter:
+  assets:
+    - assets/images/chara.png
+
+
+---------------------------------------------------------------------
+
+
+▼リスト8-5
+// import 'package:flame/components.dart';
+
+class SampleGame extends FlameGame {
+
+  @override
+  Color backgroundColor() => const Color(0xffCCCCFF);
+
+  @override
+  Future<void> onLoad() async {
+    await super.onLoad();
+    add(MySprite(Vector2(100, 100)));
+  }
+}
+
+class MySprite extends SpriteComponent {
+  late final Vector2 _position;
+
+  MySprite(this._position): super();
+
+  @override
+  Future<void> onLoad() async {
+    await super.onLoad();
+    sprite = await Sprite.load('chara.png');
+    position = _position;
+    size = Vector2(100, 100);
+  }
+
+  @override
+  void update(double delta) {
+    super.update(delta);
+  }
+}
+
+
+---------------------------------------------------------------------
+
+
+▼リスト8-6
+class SampleGame extends FlameGame
+    with HasKeyboardHandlerComponents {
+
+  @override
+  Color backgroundColor() => const Color(0xffCCCCFF);
+
+  @override
+  Future<void> onLoad() async {
+    await super.onLoad();
+    add(MySprite(Vector2(100, 100)));
+  }
+}
+
+class MySprite extends SpriteComponent
+    with KeyboardHandler {
+  late Vector2 _position;
+  late Vector2 _delta;
+
+  MySprite(this._position): super();
+
+  @override
+  Future<void> onLoad() async {
+    await super.onLoad();
+    sprite = await Sprite.load('chara.png');
+    position = _position;
+    size = Vector2(100, 100);
+    _delta = Vector2.zero();
+  }
+
+  @override
+  void update(double delta) {
+    position += _delta * delta * 100;
+    super.update(delta);
+  }
+
+  @override
+  bool onKeyEvent(
+      RawKeyEvent event,
+      Set<LogicalKeyboardKey> keysPressed,
+      ) {
+    if (event is RawKeyUpEvent){
+      _delta = Vector2.zero();
+    }
+    if (event.character == 'j') {
+      _delta.x = -1;
+    }
+    if (event.character == 'l') {
+      _delta.x = 1;
+    }
+    if (event.character == 'i') {
+      _delta.y = -1;
+    }
+    if (event.character == 'k') {
+      _delta.y = 1;
+    }
+    return true;
+  }
+}
+
+
+---------------------------------------------------------------------
+
+
+▼リスト8-7
+// import 'package:flame/experimental.dart';
+
+class SampleGame extends FlameGame with HasTappableComponents {
+  late final MySprite _sprite;
+
+  @override
+  Color backgroundColor() => const Color(0xffCCCCFF);
+
+  @override
+  Future<void> onLoad() async {
+    await super.onLoad();
+    _sprite = MySprite(Vector2(100, 100));
+    add(_sprite);
+  }
+
+  @override
+  void onTapDown(TapDownEvent event) {
+    _sprite._position = event.canvasPosition;
+    super.onTapDown(event);
+  }
+}
+
+class MySprite extends SpriteComponent with TapCallbacks {
+  late Vector2 _position;
+
+  MySprite(this._position): super();
+
+  @override
+  Future<void> onLoad() async {
+    await super.onLoad();
+    sprite = await Sprite.load('chara.png');
+    position = _position;
+    size = Vector2(100, 100);
+    anchor = Anchor.center;
+  }
+
+  @override
+  void update(double delta) {
+    final d = (_position - position) / 20;
+    position += d * delta * 100;
+    super.update(delta);
+  }
+
+  void onTapDown(TapDownEvent event) {
+    _position = Vector2.zero();
+    position = Vector2.zero();
+  }
+}
+
+
+---------------------------------------------------------------------
+
+
+▼リスト8-8
+class SampleGame extends FlameGame with HasTappableComponents {
+  Vector2 _position = Vector2(100, 100);
+  final List<PositionComponent> _sprites = <PositionComponent>[];
+
+  @override
+  Color backgroundColor() => const Color(0xffCCCCFF);
+
+  @override
+  Future<void> onLoad() async {
+    await super.onLoad();
+    var sp1 = GreenRectSprite(Vector2(200, 100));
+    _sprites.add(sp1);
+    add(sp1);
+    var sp2 = RedCircleSprite(Vector2(100, 200));
+    _sprites.add(sp2);
+    add(sp2);
+    add(WhiteTextSprite(Vector2(25, 25)));
+  }
+
+  @override
+  void onTapDown(TapDownEvent event) {
+    _position = event.canvasPosition - Vector2(50, 50);
+    super.onTapDown(event);
+  }
+}
+
+// 円コンポーネント
+class RedCircleSprite extends CircleComponent
+    with HasGameRef<SampleGame> {
+  late Vector2 _position;
+
+  RedCircleSprite(this._position): super();
+
+  @override
+  Future<void> onLoad() async {
+    await super.onLoad();
+    setColor(Colors.red);
+    position = _position;
+    size = Vector2(100, 100);
+  }
+
+  @override
+  void update(double delta) {
+    final d = (gameRef._position - position) / 10;
+    position += d * delta * 100;
+    super.update(delta);
+  }
+}
+
+// 四角形の描画コンポーネント
+class GreenRectSprite extends PositionComponent
+    with HasGameRef<SampleGame>{
+  late Vector2 _position;
+  late Paint _paint;
+
+  GreenRectSprite(this._position): super();
+
+  @override
+  Future<void> onLoad() async {
+    await super.onLoad();
+    position = _position;
+    size = Vector2(100, 100);
+    _paint = Paint()
+      ..style = PaintingStyle.fill
+      ..color = Colors.green;
+  }
+
+  @override
+  void update(double delta) {
+    final d = (gameRef._position - position) / 50;
+    position += d * delta * 100;
+    super.update(delta);
+  }
+
+  @override
+  void render(Canvas canvas) {
+    super.render(canvas);
+    final r = Rect.fromLTWH(0, 0, 100, 100);
+    canvas.drawRect(r, _paint);
+  }
+}
+
+// テキストコンポーネント
+class WhiteTextSprite extends TextComponent {
+  late Vector2 _position;
+
+  WhiteTextSprite(this._position): super();
+
+  @override
+  Future<void> onLoad() async {
+    await super.onLoad();
+    position = _position;
+    text = "Hello Flame!";
+    textRenderer = TextPaint(
+      style: TextStyle(
+        fontSize: 48.0,
+        fontWeight: FontWeight.bold,
+        color: Colors.white,
+      ),
+    );
+  }
+}
+
+
+---------------------------------------------------------------------
+
+
+▼リスト8-9
+// import 'package:flame/collisions.dart';
+
+class SampleGame extends FlameGame
+    with HasCollisionDetection,
+        HasKeyboardHandlerComponents {
+
+  @override
+  Color backgroundColor() => const Color(0xffCCCCFF);
+
+  @override
+  Future<void> onLoad() async {
+    await super.onLoad();
+    add(MySprite(Vector2(300, 300), true));
+    add(MySprite(Vector2(100, 100), false));
+  }
+}
+
+class MySprite extends CircleComponent
+    with CollisionCallbacks, KeyboardHandler  {
+  var _size = 100.0;
+  Vector2 _delta = Vector2.zero();
+  late Color _color;
+  late Vector2 _position;
+  late bool _stay;
+
+  MySprite(this._position, this._stay): super();
+
+  @override
+  Future<void> onLoad() async {
+    await super.onLoad();
+    _color = _stay ? Colors.green : Colors.red;
+    size = Vector2(_size, _size);
+    position = _position;
+    setColor(_color);
+    CircleHitbox hitbox = CircleHitbox();
+    add(hitbox);
+  }
+
+  @override
+  bool onKeyEvent(
+      RawKeyEvent event,
+      Set<LogicalKeyboardKey> keysPressed,
+  ) {
+    if (this._stay) { return false; }
+    if (event is RawKeyUpEvent){
+      _delta = Vector2.zero();
+    }
+    if (event.character == 'j') {
+      _delta.x = -1;
+    }
+    if (event.character == 'l') {
+      _delta.x = 1;
+    }
+    if (event.character == 'i') {
+      _delta.y = -1;
+    }
+    if (event.character == 'k') {
+      _delta.y = 1;
+    }
+    return true;
+  }
+
+  @override
+  void update(double delta) {
+    super.update(delta);
+    position += _delta * delta * 100;
+  }
+
+  @override
+  void onCollision(Set<Vector2> points, PositionComponent other) {
+    setColor(Colors.yellow);
+  }
+
+  @override
+  void onCollisionEnd(PositionComponent other) {
+    setColor(_color);
+  }
+}
+
+
+---------------------------------------------------------------------
+
+
+▼リスト8-10
+// import 'dart:math';
+
+class SampleGame extends FlameGame
+    with HasCollisionDetection,
+        HasKeyboardHandlerComponents,
+        HasTappableComponents  {
+  late final List<MySprite> _splayers;
+
+  @override
+  Color backgroundColor() => const Color(0xffCCCCFF);
+
+  @override
+  Future<void> onLoad() async {
+    await super.onLoad();
+    add(ScreenHitbox());
+
+    _splayers = <MySprite>[];
+    for(var i = 0;i < 10;i++) {
+      await add(MySprite());
+    }
+  }
+}
+
+class MySprite extends CircleComponent
+    with CollisionCallbacks , HasGameRef<SampleGame>  {
+  var _size = 50.0;
+  late Vector2 _delta;
+  late Color _color;
+
+  @override
+  Future<void> onLoad() async {
+    await super.onLoad();
+    final _rnd = Random();
+    _color = Color.fromARGB(255,
+        _rnd.nextInt(256),
+        _rnd.nextInt(256),
+        _rnd.nextInt(256));
+    size = Vector2(_size, _size);
+    final _loc = Vector2.random();
+    _loc.x *= gameRef.canvasSize.x;
+    _loc.y *= gameRef.canvasSize.y;
+    position = _loc;
+    _delta = Vector2.random() * 3.0;
+    setColor(_color);
+    CircleHitbox hitbox = CircleHitbox();
+    add(hitbox);
+  }
+
+  @override
+  void render(Canvas canvas) {
+    super.render(canvas);
+  }
+
+  @override
+  void update(double delta) {
+    super.update(delta);
+    position += _delta * delta * 100;
+  }
+
+  @override
+  void onCollision(Set<Vector2> points, PositionComponent other) {
+    if (other is ScreenHitbox) {
+      if (position.x <= 0) {
+        _delta.x = _delta.x.abs();
+      }if (position.x >= other.width - _size) {
+        _delta.x = -_delta.x.abs();
+      }
+      if (position.y <= 0) {
+        _delta.y = _delta.y.abs();
+      }if (position.y >= other.height - _size) {
+        _delta.y = -_delta.y.abs();
+      }
+    } else {
+      setColor(Colors.yellow);
+    }
+  }
+
+  @override
+  void onCollisionEnd(PositionComponent other) {
+    setColor(_color);
+  }
+}
+
+
+---------------------------------------------------------------------
+
+
+▼リスト8-11
+// 必要なimport文
+import 'package:flame/collisions.dart';
+import 'package:flame/components.dart';
+import 'package:flame/events.dart';
+import 'package:flame/experimental.dart';
+import 'package:flame/extensions.dart';
+import 'package:flame/game.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+
+void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  runApp(MyApp());
+}
+
+class MyApp extends StatelessWidget {
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Generated App',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+        primaryColor: const Color(0xff2196f3),
+        canvasColor: const Color(0xfffafafa),
+      ),
+      home: MyHomePage(),
+    );
+  }
+}
+
+class MyHomePage extends StatefulWidget {
+  MyHomePage({Key? key}) : super(key: key);
+
+  @override
+  _MyHomePageState createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+
+        appBar: AppBar(
+          title: Text('My App'),
+        ),
+
+        body: GameWidget(game: SampleGame(),
+      ),
+
+    );
+  }
+}
+
+// ゲーム画面のクラス
+class SampleGame extends FlameGame
+    with HasCollisionDetection,
+        HasKeyboardHandlerComponents  {
+  late final List<BlockSprite> _blocks;
+  bool _flag = true;
+  final List<Color> colors = [
+    Colors.red,
+    Colors.orange,
+    Colors.yellow,
+    Colors.green,
+    Colors.cyan,
+    Colors.blue,
+    Colors.purple,
+  ];
+
+  @override
+  Color backgroundColor() => const Color(0xFFCCCCFF);
+
+  @override
+  Future<void> onLoad() async {
+    await super.onLoad();
+    add(ScreenHitbox());
+    final _size = Vector2((size.x - 10) / 5 - 10, 25);
+    _blocks = <BlockSprite>[];
+    for(var i = 0;i < 7;i++) {
+      for(var j = 0;j < 5;j++) {
+        var sp = await BlockSprite(_size,
+            Vector2(j * (_size.x + 10) + 10, 30 * i + 50),
+            colors[i]);
+        _blocks.add(sp);
+        add(sp);
+      }
+    }
+    add(await BallSprite());
+    await add(BarSprite());
+  }
+
+  void gameOver() {
+    _flag = false;
+    add(TextSprite("FINISHED."));
+  }
+}
+
+// ボール・コンポーネント
+class BallSprite extends CircleComponent
+    with CollisionCallbacks, HasGameRef<SampleGame>  {
+  var _size = 25.0;
+  late Vector2 _delta;
+
+  @override
+  Future<void> onLoad() async {
+    await super.onLoad();
+    size = Vector2(_size, _size);
+    final _loc = Vector2(
+        gameRef.canvasSize.x / 2 - 12,
+        gameRef.canvasSize.y - 100);
+    position = _loc;
+    _delta = Vector2(1, -1);
+    setColor(Colors.white);
+    add(CircleHitbox());
+  }
+
+  @override
+  void update(double delta) {
+    if (!gameRef._flag) { return; }
+    super.update(delta);
+    position += _delta * delta * 100;
+  }
+
+  @override
+  void onCollision(Set<Vector2> points,
+      PositionComponent other) {
+    if (!gameRef._flag) { return; }
+    if (other is ScreenHitbox) {
+      if (position.x <= 0) {
+        _delta.x = _delta.x.abs();
+      }if (position.x >= other.width - _size) {
+        _delta.x = -_delta.x.abs();
+      }
+      if (position.y <= 0) {
+        _delta.y = _delta.y.abs();
+      }if (position.y >= other.height - _size) {
+        _delta.y = -_delta.y.abs();
+        gameRef.gameOver();
+      }
+    }
+    if (other is BlockSprite) {
+      if (position.x + size.x / 2 < other.position.x) {
+        _delta.x = -_delta.x.abs();
+      }if (position.x + size.x / 2 > other.position.x + other.width) {
+        _delta.x = _delta.x.abs();
+      }
+      if (position.y + size.y / 2 < other.position.y) {
+        _delta.y = -_delta.y.abs();
+      }
+      if (position.y  + size.y / 2 > other.position.y + other.height) {
+        _delta.y = _delta.y.abs();
+      }
+    }
+    if (other is BarSprite) {
+      if (position.x + size.x / 2 < other.position.x) {
+        _delta.x = -_delta.x.abs();
+      }if (position.x + size.x / 2 > other.position.x + other.width) {
+        _delta.x = _delta.x.abs();
+      }
+      if (position.y + size.y / 2 < other.position.y) {
+        _delta.y = -_delta.y.abs();
+        final d = ((other.position.x + other.width / 2) - (position.x + size.x / 2));
+        final p = (other.width / 5).floor();
+        _delta.x -= (d / p);
+        _delta.x = _delta.x > 3 ? 3 : _delta.x;
+        _delta.y = -(5 / (gameRef._blocks.length / 5).ceil() + 1);
+      }
+      if (position.y  + size.y / 2 > other.position.y + other.height) {
+        _delta.y = _delta.y.abs();
+      }
+    }
+  }
+}
+
+// ブロック・コンポーネント
+class BlockSprite extends PositionComponent
+    with CollisionCallbacks, HasGameRef<SampleGame>{
+  late Vector2 _position;
+  late Vector2 _size;
+  late Paint _paint;
+  late Color _color;
+
+  BlockSprite(this._size, this._position, this._color): super();
+
+  @override
+  Future<void> onLoad() async {
+    await super.onLoad();
+    position = _position;
+    size = _size;
+    _paint = Paint()
+      ..style = PaintingStyle.fill
+      ..color = _color;
+    add(RectangleHitbox());
+  }
+
+  @override
+  void render(Canvas canvas) {
+    super.render(canvas);
+    final r = Rect.fromLTWH(0, 0, _size.x, _size.y);
+    canvas.drawRect(r, _paint);
+  }
+
+  @override
+  void onCollisionEnd(PositionComponent other) {
+    if (!gameRef._flag) { return; }
+    gameRef.remove(this);
+    gameRef._blocks.remove(this);
+    if (gameRef._blocks.length == 0) {
+      gameRef.gameOver();
+    }
+  }
+}
+
+// バー・コンポーネント
+class BarSprite extends PositionComponent
+    with CollisionCallbacks, KeyboardHandler,
+        HasGameRef<SampleGame> {
+  Vector2 _delta = Vector2.zero();
+  late Paint _paint;
+
+  BarSprite(): super();
+
+  @override
+  Future<void> onLoad() async {
+    await super.onLoad();
+    size = Vector2(100, 25);
+    position = Vector2(gameRef.canvasSize.x / 2 - 50, gameRef.canvasSize.y - 50);
+    _paint = Paint()
+      ..style = PaintingStyle.fill
+      ..color = Colors.white;
+    add(RectangleHitbox());
+  }
+
+  @override
+  void update(double delta) {
+    if (!gameRef._flag) { return; }
+    position += _delta * delta * 100;
+    super.update(delta);
+  }
+
+  @override
+  void render(Canvas canvas) {
+    super.render(canvas);
+    final r = Rect.fromLTWH(0, 0, 100, 25);
+    canvas.drawRect(r, _paint);
+  }
+
+  @override
+  bool onKeyEvent(
+      RawKeyEvent event,
+      Set<LogicalKeyboardKey> keysPressed,
+      ) {
+    if (!gameRef._flag) { return false; }
+    if (event is RawKeyUpEvent){
+      _delta = Vector2.zero();
+    }
+    if (event.character == 'j') {
+      _delta.x = -3;
+    }
+    if (event.character == 'l') {
+      _delta.x = 3;
+    }
+    return true;
+  }
+}
+
+// テキスト・コンポーネント
+class TextSprite extends TextComponent
+    with HasGameRef<SampleGame> {
+  late String _message;
+
+  TextSprite(this._message): super();
+
+  @override
+  Future<void> onLoad() async {
+    await super.onLoad();
+    anchor = Anchor.center;
+    position = Vector2(gameRef.canvasSize.x / 2,gameRef.canvasSize.y / 2);
+    text = _message;
+    textRenderer = TextPaint(
+      style: TextStyle(
+        fontSize: 60.0,
+        fontWeight: FontWeight.w300,
+        color: Colors.red,
+      ),
+    );
+  }
+}
+
+
+---------------------------------------------------------------------
+
+
+▼リストA-1
+void main() {
+  print("Hello!");
+}
+
+
+---------------------------------------------------------------------
+
+
+▼リストA-2
+void main() {
+  const a = 12;
+  const int b = 34;
+  int c = 56;
+  var x = a * b ~/ c;
+  print("計算結果");
+  print(x);
+}
+
+
+---------------------------------------------------------------------
+
+
+▼リストA-3
+void main() {
+  var arr = <int>[1,2,3];
+  arr[0] = arr[1] + arr[2];
+  print(arr);
+}
+
+
+---------------------------------------------------------------------
+
+
+▼リストA-4
+void main() {
+  var map = {"A":1,"B":2,"C":3};
+  map["total"] = map["A"]! + map["B"]! + map["C"]!;
+  print(map);
+}
+
+
+---------------------------------------------------------------------
+
+
+▼リストA-5
+var map = <String,int>{"A":1,"B":2,"C":3,"total":0};
+
+
+---------------------------------------------------------------------
+
+
+▼リストA-6
+void main() {
+  var num = 12345;
+  if (num % 2 == 0) {
+    print("$num は偶数です。");
+  } else {
+    print("$num は奇数です。");
+  }
+}
+
+
+---------------------------------------------------------------------
+
+
+▼リストA-7
+void main() {
+  var num = 12345;
+  print("$num は${num % 2 == 0 ? "偶数" : "奇数"}です。");
+}
+
+
+---------------------------------------------------------------------
+
+
+▼リストA-8
+void main() {
+  var hour = 15;
+  switch(hour ~/ 6) {
+    case 0:
+      print("$hour 時です。おやすみ……。");
+      break;
+    case 1:
+      print("$hour 時です。おはよう！");
+      break;
+    case 2:
+      print("$hour 時です。こんにちは。");
+      break;
+    case 3:
+      print("$hour 時です。こんばんは。");
+      break;
+    default:
+      print("何時かわかりません……。");
+  }
+}
+
+
+---------------------------------------------------------------------
+
+
+▼リストA-9
+void main() {
+  var max = 10;
+  var total = 0;
+  var count = 1;
+  while(count <= max) {
+    total += count++;
+  }
+  print("$max までの合計は、$total です。");
+}
+
+
+---------------------------------------------------------------------
+
+
+▼リストA-10
+void main() {
+  var max = 100;
+  var total = 0;
+  for(var i = 1;i <= max;i++) {
+    total += i;
+  }
+  print("$max までの合計は、$total です。");
+}
+
+
+---------------------------------------------------------------------
+
+
+▼リストA-11
+void main() {
+  var data = [12,34,56,78,90];
+  var total = 0;
+  for(var n in data) {
+    total += n;
+  }
+  print("データの合計は、$total です。");
+}
+
+
+---------------------------------------------------------------------
+
+
+▼リストA-12
+void main() {
+  hello();
+}
+
+void hello() {
+  print("Hello.");
+}
+
+
+---------------------------------------------------------------------
+
+
+▼リストA-13
+void main() {
+  hello("タロー");
+  hello("ジロー");
+}
+
+void hello(name) {
+  print("こんにちは、$name さん！");
+}
+
+
+---------------------------------------------------------------------
+
+
+▼リストA-14
+void main() {
+  const x = 20;
+  const y = 30;
+  print("$x から $y までの合計は、${calc(x,y)}です。");
+}
+
+int calc(int n, int m) {
+  var total = 0;
+  for(var i = n; i <= m;i++) {
+    total += i;
+  }
+  return total;
+}
+
+
+---------------------------------------------------------------------
+
+
+▼リストA-15
+void main() {
+  print(calc(50));
+  print(calc(51,100));
+}
+
+int calc(int a, [int b = 0]) {
+  var n = a;
+  var m = b;
+  if (n > m) {
+    n = b;
+    m = a;
+  }
+  var total = 0;
+  for(var i = n; i <= m;i++) {
+    total += i;
+  }
+  return total;
+}
+
+
+---------------------------------------------------------------------
+
+
+▼リストA-16
+void main() {
+  print(calc(min:1, max:100));
+  print(calc(max:200));
+}
+
+int calc({int min=0, int max=0}) {
+  var total = 0;
+  for(var i = min; i <= max;i++) {
+    total += i;
+  }
+  return total;
+}
+
+
+---------------------------------------------------------------------
+
+
+▼リストA-17
+void main() {
+  const data = [12, 34, 56, 78, 90, 100];
+  var total = 0;
+  data.forEach((n){
+    total += n;
+  });
+  print("データの合計は、$total です。");
+}
+
+
+---------------------------------------------------------------------
+
+
+▼リストA-18
+void main() {
+  const data = [12,34,56, 78, 90, 100];
+  var total = 0;
+  data.forEach((n)=>total += n);
+  print("データの合計は、$total です。");
+}
+
+
+---------------------------------------------------------------------
+
+
+▼リストA-19
+void main() {
+  Person me = Person();
+  me.name = "Taro";
+  me.age = 39;
+  me.say();
+}
+
+class Person {
+  String name = "";
+  int age = 0;
+
+  void say() {
+    print("Hi, I'm $name. I'm $age years old.");
+  }
+}
+
+
+---------------------------------------------------------------------
+
+
+▼リストA-20
+void main() {
+  Person me = Person("Taro",39);
+  me.say();
+  Person("Hanako",28).say();
+}
+
+class Person {
+  String name = "";
+  int age = 0;
+
+  Person(this.name, this.age);
+
+  void say() {
+    print("Hi, I'm $name. I'm $age years old.");
+  }
+}
+
+
+---------------------------------------------------------------------
+
+
+▼リストA-21
+void main() {
+  Person me = Person("Taro",39);
+  me.say();
+  Person("Hanako",28).say();
+}
+
+class Person {
+  final String _name;
+  final int _age;
+
+  Person(this._name, this._age);
+
+  void say() {
+    print("Hi, I'm $_name. I'm $_age years old.");
+  }
+}
+
+
+---------------------------------------------------------------------
+
+
+▼リストA-22
+void main() {
+  Person me = Person("Taro",39);
+  me.say();
+  me.birth = 1999;
+  me.say();
+}
+
+class Person {
+  String _name;
+  int _age;
+
+  int get birth => 2022 - _age;
+  set birth(int n) => _age = 2022 - n;
+
+  Person(this._name, this._age);
+
+  void say() {
+    print("Hi, I'm $_name. I was born in $birth ($_age years old).");
+  }
+}
+
+
+---------------------------------------------------------------------
+
+
+▼リストA-23
+void main() {
+  Person me = Person("Taro",39);
+  me.say();
+  Student you = Student("Hanako",16,2);
+  you.say();
+}
+
+class Person {
+  String _name;
+  int _age;
+
+  Person(this._name, this._age);
+
+  void say() {
+    print("Hi, I'm $_name. I 'm $_age years old.");
+  }
+}
+
+class Student extends Person {
+  int _grade;
+
+  Student(name,age,this._grade):super(name,age);
+
+  @override
+  void say() {
+    print("Hi, I'm $_name. I 'm $_grade grade student.");
+  }
+}
