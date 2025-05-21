@@ -188,6 +188,7 @@ class _MyHomePageState extends State<MyHomePage> {
 ▼リスト2-5
 class MyHomePage extends StatefulWidget {
   const MyHomePage({title:'Flutter Demo'}): super();
+  final String title;
 
   @override
   _MyHomePageState createState() => _MyHomePageState();
