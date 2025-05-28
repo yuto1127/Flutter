@@ -1,44 +1,46 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(new MyApp());
+  runApp(MyApp());
 }
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
 
   @override
   Widget build(BuildContext context) {
-    return new MaterialApp(
+    return MaterialApp(
       title: 'Generated App',
-      theme: new ThemeData(
+      theme: ThemeData(
         primarySwatch: Colors.blue,
         primaryColor: const Color(0xFF2196f3),
         // accentColor: const Color(0xFF2196f3),
         canvasColor: const Color(0xFFfafafa),
       ),
-      home: new MyHomePage(),
+      home: MyHomePage(),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key? key}) : super(key: key);
+  const MyHomePage({super.key});
   @override
-  _MyHomePageState createState() => new _MyHomePageState();
+  _MyHomePageState createState() => _MyHomePageState();
 }
 
 class _MyHomePageState extends State<MyHomePage> {
     @override
     Widget build(BuildContext context) {
-      return new Scaffold(
-        appBar: new AppBar(
-          title: new Text('App Name'),
+      return Scaffold(
+        appBar: AppBar(
+          title: Text('App Name'),
           ),
         body:
-          new Center(
+          Center(
             child:
-              new Text(
+              Text(
               "Hello Flutter!",
-                style: new TextStyle(fontSize:33.0,
+                style: TextStyle(fontSize:33.0,
                 color: const Color(0xFF000000),
                 fontWeight: FontWeight.w700,
                 fontFamily: "Roboto"),

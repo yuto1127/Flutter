@@ -5,7 +5,7 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  const MyApp({super.key});
   final title = 'Flutterサンプル';
 
   @override
@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       home: MyHomePage(
-        title: this.title,
+        title: title,
       ),
     );
   }
@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
 class MyHomePage extends StatefulWidget {
   final String title;
 
-  const MyHomePage({Key? key, required this.title}) : super(key: key);
+  const MyHomePage({super.key, required this.title});
 
   @override
   _MyHomePageState createState() => _MyHomePageState();
@@ -30,13 +30,13 @@ class MyHomePage extends StatefulWidget {
 
 // データ用クラス
 class Data {
-  int _price;
-  String _name;
+  final int _price;
+  final String _name;
   Data(this._name, this._price) : super();
 
   @override
   String toString() {
-    return _name + ':' + _price.toString() + '円';
+    return '$_name:$_price円';
   }
 }
 
@@ -59,16 +59,16 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Set data'),
+        title: const Text('Set data'),
       ),
       body: Text(
         _item.toString(),
-        style: TextStyle(fontSize: 32.0),
+        style: const TextStyle(fontSize: 32.0),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: _setData,
         tooltip: 'set message.',
-        child: Icon(Icons.star),
+        child: const Icon(Icons.star),
       ),
     );
   }
