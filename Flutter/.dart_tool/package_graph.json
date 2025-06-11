@@ -1,0 +1,14 @@
+{
+  "roots": [
+    "todo_app"
+  ],
+  "packages": [
+    {
+      "name": "todo_app",
+      "version": "0.0.0",
+      "dependencies": [],
+      "devDependencies": []
+    }
+  ],
+  "configVersion": 1
+}
